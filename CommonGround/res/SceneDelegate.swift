@@ -13,7 +13,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        print(connectionOptions.urlContexts.first?.url.absoluteString)
+        //print(connectionOptions.urlContexts.first?.url.absoluteString)
         if let connectedURL = connectionOptions.urlContexts.first?.url.absoluteString, !(connectedURL.isEmpty){
             Strings.openURLString = connectedURL
         }
@@ -33,7 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if let url = URLContexts.first?.url {
             Strings.openURLString = url.absoluteString
-            print("launched with url")
+            //print("launched with url")
         }
     }
     func sceneDidBecomeActive(_ scene: UIScene) {

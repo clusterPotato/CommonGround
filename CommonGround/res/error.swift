@@ -30,7 +30,7 @@ extension UIViewController: ErrorDelegate {
     }
     func showToast(message : String) {
         let darkMode = (traitCollection.userInterfaceStyle == .dark)
-        print(darkMode)
+        //print(darkMode)
         let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/4 - 75, y: self.view.frame.size.height-100, width: self.view.frame.width*0.9, height: 35))
         toastLabel.backgroundColor = darkMode ? UIColor.white.withAlphaComponent(0.6) : UIColor.black.withAlphaComponent(0.6)
         toastLabel.textColor = .white
@@ -77,3 +77,11 @@ enum SongError: LocalizedError{
     }
 }
 
+enum FireError: LocalizedError{
+    case noGenres
+    case noAuth
+    case genericError(Error)
+    case decodingError
+    case couldNotSave
+    case notInitializedUser
+}

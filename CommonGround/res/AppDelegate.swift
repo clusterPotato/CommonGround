@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         Strings.openURLString = url.absoluteString
-        print("pp")
+        //print("pp")
         return true
     }
     func getCodeForRedirect(){

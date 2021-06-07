@@ -14,6 +14,9 @@ extension Encodable {
         return try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any]
     }
 }
+protocol UserListChangedHandler:AnyObject{
+    func dataChanged()
+}
 protocol EmbedDelegate: AnyObject{
     func changeInfo(song: SpotifySong)
 }
@@ -76,4 +79,14 @@ extension UIView {
             self.layer.shadowOpacity = 0.7
             self.layer.masksToBounds = false
         }
+}
+extension UserPickVC: UserListChangedHandler{
+    func dataChanged() {
+        DispatchQueue.main.async {
+            self.recentUsersCollectionView.reloadData()
+            //print("delegate data changed")
+        }
+    }
+    
+    
 }

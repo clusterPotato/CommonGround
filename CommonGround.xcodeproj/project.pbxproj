@@ -11,25 +11,25 @@
 		03259DE32667C3DE00EE5642 /* error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03259DE22667C3DE00EE5642 /* error.swift */; };
 		03259DE52667D37E00EE5642 /* endUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03259DE42667D37E00EE5642 /* endUserController.swift */; };
 		03259DE726682D2700EE5642 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03259DE626682D2700EE5642 /* GoogleService-Info.plist */; };
-		039CEFBF2668F4E1001BFD4D /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039CEFBE2668F4E1001BFD4D /* SignupViewController.swift */; };
+		0388D214266A813E00F9834D /* AddManCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0388D213266A813E00F9834D /* AddManCell.swift */; };
+		0388D216266A830900F9834D /* AddManViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0388D215266A830900F9834D /* AddManViewController.swift */; };
 		039CEFC1266926C7001BFD4D /* ExtendyBois.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039CEFC0266926C7001BFD4D /* ExtendyBois.swift */; };
-		039CEFC326693775001BFD4D /* EmbedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039CEFC226693775001BFD4D /* EmbedVC.swift */; };
 		039CEFC52669640C001BFD4D /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039CEFC42669640C001BFD4D /* ContactCollectionViewCell.swift */; };
 		039CEFC72669658E001BFD4D /* UserPickVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039CEFC62669658E001BFD4D /* UserPickVC.swift */; };
 		03AAD0DC26699D0700AB9C25 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AAD0DB26699D0700AB9C25 /* LoginVC.swift */; };
 		03AAD0DE26699EA600AB9C25 /* TinderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AAD0DD26699EA600AB9C25 /* TinderView.swift */; };
 		03D9F2F326666B7600F98302 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9F2F226666B7600F98302 /* AppDelegate.swift */; };
 		03D9F2F526666B7600F98302 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9F2F426666B7600F98302 /* SceneDelegate.swift */; };
-		03D9F2F726666B7600F98302 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9F2F626666B7600F98302 /* ViewController.swift */; };
 		03D9F2FA26666B7600F98302 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03D9F2F826666B7600F98302 /* Main.storyboard */; };
 		03D9F2FF26666B7900F98302 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03D9F2FD26666B7900F98302 /* LaunchScreen.storyboard */; };
 		03D9F30D26666D3C00F98302 /* SpotifySongsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9F30C26666D3C00F98302 /* SpotifySongsController.swift */; };
 		03D9F30F26666D5300F98302 /* SpotifySong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9F30E26666D5300F98302 /* SpotifySong.swift */; };
-		03D9F313266679B300F98302 /* ManPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9F312266679B300F98302 /* ManPicker.swift */; };
 		03D9F31726667EB400F98302 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03D9F31626667EB400F98302 /* Assets.xcassets */; };
 		03D9F31B266685C000F98302 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9F31A266685C000F98302 /* User.swift */; };
 		03D9F31D266689AC00F98302 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9F31C266689AC00F98302 /* UserController.swift */; };
 		03D9F31F2666A82100F98302 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9F31E2666A82100F98302 /* Strings.swift */; };
+		03E6360A266AC1AD00F753BA /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E63609266AC1AD00F753BA /* UserData.swift */; };
+		03E6360E266B186000F753BA /* GenreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E6360D266B186000F753BA /* GenreView.swift */; };
 		84134BF83171415EC9280D53 /* libPods-CommonGround.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6291C7B85D46719EB3AD274D /* libPods-CommonGround.a */; };
 /* End PBXBuildFile section */
 
@@ -38,27 +38,27 @@
 		03259DE22667C3DE00EE5642 /* error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = error.swift; sourceTree = "<group>"; };
 		03259DE42667D37E00EE5642 /* endUserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = endUserController.swift; sourceTree = "<group>"; };
 		03259DE626682D2700EE5642 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		039CEFBE2668F4E1001BFD4D /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		0388D213266A813E00F9834D /* AddManCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddManCell.swift; sourceTree = "<group>"; };
+		0388D215266A830900F9834D /* AddManViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddManViewController.swift; sourceTree = "<group>"; };
 		039CEFC0266926C7001BFD4D /* ExtendyBois.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendyBois.swift; sourceTree = "<group>"; };
-		039CEFC226693775001BFD4D /* EmbedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedVC.swift; sourceTree = "<group>"; };
-		039CEFC42669640C001BFD4D /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCollectionViewCell.swift; sourceTree = "<group>"; };
+		039CEFC42669640C001BFD4D /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContactCollectionViewCell.swift; path = "../New Group/ContactCollectionViewCell.swift"; sourceTree = "<group>"; };
 		039CEFC62669658E001BFD4D /* UserPickVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPickVC.swift; sourceTree = "<group>"; };
 		03AAD0DB26699D0700AB9C25 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		03AAD0DD26699EA600AB9C25 /* TinderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinderView.swift; sourceTree = "<group>"; };
 		03D9F2EF26666B7500F98302 /* CommonGround.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CommonGround.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03D9F2F226666B7600F98302 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03D9F2F426666B7600F98302 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		03D9F2F626666B7600F98302 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		03D9F2F926666B7600F98302 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		03D9F2FE26666B7900F98302 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		03D9F30026666B7900F98302 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03D9F30C26666D3C00F98302 /* SpotifySongsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifySongsController.swift; sourceTree = "<group>"; };
 		03D9F30E26666D5300F98302 /* SpotifySong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifySong.swift; sourceTree = "<group>"; };
-		03D9F312266679B300F98302 /* ManPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManPicker.swift; sourceTree = "<group>"; };
 		03D9F31626667EB400F98302 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		03D9F31A266685C000F98302 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		03D9F31C266689AC00F98302 /* UserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
 		03D9F31E2666A82100F98302 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		03E63609266AC1AD00F753BA /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		03E6360D266B186000F753BA /* GenreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreView.swift; sourceTree = "<group>"; };
 		6291C7B85D46719EB3AD274D /* libPods-CommonGround.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CommonGround.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A90AEE6C16E4602295A9959 /* Pods-CommonGround.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommonGround.release.xcconfig"; path = "Target Support Files/Pods-CommonGround/Pods-CommonGround.release.xcconfig"; sourceTree = "<group>"; };
 		BF7BF31C23BCD412DDD5988C /* Pods-CommonGround.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommonGround.debug.xcconfig"; path = "Target Support Files/Pods-CommonGround/Pods-CommonGround.debug.xcconfig"; sourceTree = "<group>"; };
@@ -76,14 +76,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		03AAD0DA26699CF900AB9C25 /* New */ = {
+		036B3109266BA9FB00262894 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
-				039CEFC62669658E001BFD4D /* UserPickVC.swift */,
-				03AAD0DB26699D0700AB9C25 /* LoginVC.swift */,
-				03AAD0DD26699EA600AB9C25 /* TinderView.swift */,
+				0388D213266A813E00F9834D /* AddManCell.swift */,
+				039CEFC42669640C001BFD4D /* ContactCollectionViewCell.swift */,
 			);
-			path = New;
+			path = Custom;
 			sourceTree = "<group>";
 		};
 		03D9F2E626666B7500F98302 = {
@@ -134,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				03D9F30E26666D5300F98302 /* SpotifySong.swift */,
+				03E63609266AC1AD00F753BA /* UserData.swift */,
 				03D9F31A266685C000F98302 /* User.swift */,
 			);
 			path = models;
@@ -142,9 +142,8 @@
 		03D9F30826666B8E00F98302 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				039CEFC42669640C001BFD4D /* ContactCollectionViewCell.swift */,
-				03D9F2F826666B7600F98302 /* Main.storyboard */,
-				03D9F2FD26666B7900F98302 /* LaunchScreen.storyboard */,
+				03F0F86D266BB1E4005950EA /* sb */,
+				036B3109266BA9FB00262894 /* Custom */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -172,13 +171,22 @@
 		03D9F30B26666B9800F98302 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				03AAD0DA26699CF900AB9C25 /* New */,
-				03D9F2F626666B7600F98302 /* ViewController.swift */,
-				03D9F312266679B300F98302 /* ManPicker.swift */,
-				039CEFBE2668F4E1001BFD4D /* SignupViewController.swift */,
-				039CEFC226693775001BFD4D /* EmbedVC.swift */,
+				039CEFC62669658E001BFD4D /* UserPickVC.swift */,
+				03AAD0DB26699D0700AB9C25 /* LoginVC.swift */,
+				03AAD0DD26699EA600AB9C25 /* TinderView.swift */,
+				0388D215266A830900F9834D /* AddManViewController.swift */,
+				03E6360D266B186000F753BA /* GenreView.swift */,
 			);
 			path = view;
+			sourceTree = "<group>";
+		};
+		03F0F86D266BB1E4005950EA /* sb */ = {
+			isa = PBXGroup;
+			children = (
+				03D9F2F826666B7600F98302 /* Main.storyboard */,
+				03D9F2FD26666B7900F98302 /* LaunchScreen.storyboard */,
+			);
+			path = sb;
 			sourceTree = "<group>";
 		};
 		131A880FBC4A744779E6519E /* Pods */ = {
@@ -314,22 +322,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				03D9F31D266689AC00F98302 /* UserController.swift in Sources */,
-				03D9F2F726666B7600F98302 /* ViewController.swift in Sources */,
 				03259DE12667B45B00EE5642 /* AuthorizationController.swift in Sources */,
 				03D9F2F326666B7600F98302 /* AppDelegate.swift in Sources */,
 				03D9F30F26666D5300F98302 /* SpotifySong.swift in Sources */,
 				03D9F2F526666B7600F98302 /* SceneDelegate.swift in Sources */,
-				039CEFC326693775001BFD4D /* EmbedVC.swift in Sources */,
 				03259DE52667D37E00EE5642 /* endUserController.swift in Sources */,
 				03D9F30D26666D3C00F98302 /* SpotifySongsController.swift in Sources */,
 				03259DE32667C3DE00EE5642 /* error.swift in Sources */,
+				0388D216266A830900F9834D /* AddManViewController.swift in Sources */,
 				03D9F31B266685C000F98302 /* User.swift in Sources */,
 				039CEFC1266926C7001BFD4D /* ExtendyBois.swift in Sources */,
-				039CEFBF2668F4E1001BFD4D /* SignupViewController.swift in Sources */,
+				0388D214266A813E00F9834D /* AddManCell.swift in Sources */,
+				03E6360A266AC1AD00F753BA /* UserData.swift in Sources */,
 				039CEFC52669640C001BFD4D /* ContactCollectionViewCell.swift in Sources */,
 				03AAD0DC26699D0700AB9C25 /* LoginVC.swift in Sources */,
+				03E6360E266B186000F753BA /* GenreView.swift in Sources */,
 				03D9F31F2666A82100F98302 /* Strings.swift in Sources */,
-				03D9F313266679B300F98302 /* ManPicker.swift in Sources */,
 				039CEFC72669658E001BFD4D /* UserPickVC.swift in Sources */,
 				03AAD0DE26699EA600AB9C25 /* TinderView.swift in Sources */,
 			);

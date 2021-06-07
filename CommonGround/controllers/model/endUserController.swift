@@ -21,8 +21,8 @@ class EndUserController{
         request.httpMethod = "POST"
         request.setValue("Basic \(Strings.base64Secret)", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { data, response, err in
-            if let error = err{
-                print(err)
+            if let _ = err{
+                //print(err)
                 return completion(.failure(.cannotCompute))
             }
             if let data = data{
@@ -30,7 +30,7 @@ class EndUserController{
                     let token = try JSONDecoder().decode(Token.self, from: data)
                     return completion(.success(token.access_token))
                 }catch{
-                    return completion(.failure(.cannotCompute))
+                    completion(.failure(.cannotCompute))
                 }
             }
         }.resume()
@@ -39,10 +39,11 @@ class EndUserController{
         if let url = Strings.openURLString{
             if(url.contains("code")){
                 EndUserController.shared.getAuthCode(launchURL: url)
-                EndUserController.shared.getTokenFromCode { result in
+                getTokenFromCode { result in
                     switch result{
                     case .success(let access ):
                         Strings.token = access
+                        break
                     case .failure(let err):
                         print(err.localizedDescription)
                     }

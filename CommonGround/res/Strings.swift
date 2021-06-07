@@ -19,4 +19,5 @@ struct Strings{
     static var openURLString: String?
     static var oauthCode: String?
     static var token: String?
+    static let genreSeedsURL = "https://api.spotify.com/v1/recommendations/available-genre-seeds"
 }
