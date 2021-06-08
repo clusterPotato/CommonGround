@@ -28,10 +28,8 @@ class LoginVC: UIViewController{
                         nextButton.backgroundColor = UIColor(named: "ButtonColor")
                     }
                 }
-                //print(user.user.display_name)
                 UserController.shared.loadUsers(){
-                    DispatchQueue.main.async{
-                    }
+                    
                 }
             }
         }

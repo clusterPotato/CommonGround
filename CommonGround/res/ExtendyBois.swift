@@ -13,6 +13,7 @@ extension Encodable {
         }
         return try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any]
     }
+    
 }
 protocol UserListChangedHandler:AnyObject{
     func dataChanged()
@@ -89,4 +90,14 @@ extension UserPickVC: UserListChangedHandler{
     }
     
     
+}
+extension SpotifyArtist{
+    static func fromDBListEntry(_ t: Any)->SpotifyArtist?{
+        guard let t = t as? [String: Any] else { return nil}
+        let genres = t["genres"] as? [String] ?? []
+        guard let id = t["id"] as? String else { return nil}
+        guard let name = t["name"] as? String else { return nil}
+        guard let uri = t["uri"] as? String else { return nil}
+        return SpotifyArtist(uri: uri, name: name, id: id, genres: genres)
+    }
 }

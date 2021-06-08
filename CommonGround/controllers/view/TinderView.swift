@@ -16,14 +16,39 @@ class TinderViewController: UIViewController{
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var pictureView: UIImageView!
     @IBOutlet weak var artistLabel: UILabel!
+    var genreList: [String]?
+    var currentlyDisplayedSong: SpotifySong?
+    var queue:[SpotifySong]=[]
     
     //MARK: properties
     var otherUserData: UserData?
+    var seedArtists: [String]=[]//the plan is to get top recent artist from u1, u2 for seeds, stored in form of id
+    var seedSongs:[String]=[]//the plan is to add a random track out of user 1 top 50 and a random track out of user 2 top 50, use id
     //i would make a current user data but that would just be a weak reference to one that already exists in usercontroller
     
     override func viewDidLoad() {
         super.viewDidLoad()
         sytlize()
+        get2SongsReady__BEGINNING__()
+    }
+    
+    func get2SongsReady__BEGINNING__(){
+        guard let genres = genreList else { return}
+        print(genres)
+        fillSeeds(){
+            print("seeds are \(self.seedArtists) : \(self.seedSongs)")
+        }
+    }
+    func fillSeeds(completion: @escaping(Void)->Void){
+        UserController.shared.getArtistsFromDB { artists in
+            for artist in artists{
+                print(artist.name)
+            }
+            seedArtists.append(artists.randomElement()?.id)
+        }
+    }
+    func getSongReady(completion: @escaping(Result<SpotifySong, SongError>)->Void){
+        
     }
     func sytlize(){
         playButton.setRadiusWithShadow(playButton.layer.bounds.height/2)

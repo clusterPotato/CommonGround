@@ -70,6 +70,8 @@ class UserPickVC: UIViewController{
         guard let vc = sb.instantiateViewController(identifier: "GenreInfo") as? GenreViewController else { return}
         guard let userdata = self.selectedCellUserdata else { return}
         vc.userData = userdata
+        guard let currentUserdata = UserController.shared.currentUser else { return}
+        vc.currentUserData = currentUserdata
         present(vc, animated: true, completion: nil)
         
     }
@@ -77,9 +79,12 @@ class UserPickVC: UIViewController{
         if viewGenresButton.isEnabled{
             //proceed
             let sb = UIStoryboard(name: "Main", bundle: nil)
+            guard let currentUser = UserController.shared.currentUser,
+                  let cellUser = selectedCellUserdata else { return}
             guard let vc = sb.instantiateViewController(identifier: "TinderSwipey") as? TinderViewController else { return}
             vc.modalPresentationStyle = .fullScreen
             vc.otherUserData = selectedCellUserdata
+            vc.genreList = giveCommonGenres(user1: currentUser, user2: cellUser)
             present(vc, animated: true, completion: nil)
         }else{
             //do not proceed until user selects a valid user
@@ -174,5 +179,22 @@ extension UserPickVC:UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+extension UserPickVC{
+    //MARK: extra functions that i dont want the clutter of
+    func giveCommonGenres(user1: UserData, user2: UserData)->[String]{
+        var commons: [String] = []
+        for genre in user1.genres{
+            if (user2.genres.contains(genre))&&(!(commons.contains(genre))){
+                commons.append(genre)
+            }
+        }
+        for genre in user2.genres{
+            if (user1.genres.contains(genre))&&(!(commons.contains(genre))){
+                commons.append(genre)
+            }
+        }
+        return commons
     }
 }

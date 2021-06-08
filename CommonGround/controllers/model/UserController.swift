@@ -22,29 +22,44 @@ class UserController{
     weak var delegate: UserListChangedHandler?
     let database = Database.database()
     
+    func saveID(){
+        guard let currentUser = currentUser else { return}
+        let db = database.reference().child(currentUser.user.id).child("display_name")
+        let dict = currentUser.user.display_name
+        db.setValue(dict){
+            error, _ in
+            if let error = error {
+                print(error)
+            }else{
+                
+            }
+        }
+    }
+    
     //MARK: user specific functions
     func savePeople(){
-        let db = database.reference().child(currentUser?.user.display_name ?? "nil")
+        let db = database.reference().child(currentUser?.user.id ?? "nil")
         let dbRef = db.child("previousUsers")
         //convert sot into a dictionary
         var dict : [String: [String: Any]] = [:]
-        for i in Range(0...savedUsers.count-1){
+        for i in savedUsers.indices{
             let person = savedUsers[i].user
-            dict["\(person.display_name)"] = person.toDictionnary
+            dict["\(person.id)"] = person.toDictionnary
         }
+        print(dict)
         dbRef.setValue(dict){
             error, _ in
             if let error = error{
-                //print(error)
+                print(error)
                 return
             }else{
-                //print("success saved")
+                print("success saved")
             }
             
         }
     }
     func loadUsers(completion: @escaping()->Void){
-        let db = database.reference().child(currentUser?.user.display_name ?? "nil")
+        let db = database.reference().child(currentUser?.user.id ?? "nil")
         let dbRef = db.child("previousUsers")
         dbRef.getData { err, snapshot in
             if let err = err{
@@ -61,7 +76,7 @@ class UserController{
                         case .success(let genres):
                             let userdata = UserData(user: user, genres: genres)
                             self.savedUsers.append(userdata)
-                        case .failure(_):
+                        case .failure(let err):
                             let userdata = UserData(user: user, genres: [])
                             self.savedUsers.append(userdata)
                         }
@@ -81,13 +96,15 @@ class UserController{
                     case .success(let genres):
                         let userdata = UserData(user: user, genres: genres)
                         self.savedUsers.append(userdata)
+                        self.savePeople()
+                        return completion(.success(user))
                     case .failure(_):
                         let userdata = UserData(user: user, genres: [])
                         self.savedUsers.append(userdata)
+                        self.savePeople()
+                        return completion(.success(user))
                     }
                 }
-                self.savePeople()
-                return completion(.success(user))
             case .failure(let err):
                 return completion(.failure(err))
             }
@@ -132,6 +149,45 @@ class UserController{
             }
         }
     }
+    func saveArtistsToDB(artists: [SpotifyArtist], completion: @escaping(Result<[SpotifyArtist], FireError>)->Void){
+        guard let currentUser = currentBlankUser else { return}
+        let db = database.reference().child(currentUser.id).child("topArtists")
+        let dict = artists.map({$0.toDictionnary})
+        db.setValue(dict){ err, _ in
+            if let err = err{
+                return completion(.failure(.genericError(err)))
+            }else {return completion(.success(artists))}
+        }
+    }
+    func saveSongsToDB(songs: [SpotifySong], completion: @escaping(Result<[SpotifySong], FireError>)->Void){
+        guard let currentUser = currentBlankUser else { return}
+        let db = database.reference().child(currentUser.id).child("topSongs")
+        let dict = songs.map({$0.toDictionnary})
+        db.setValue(dict){ err, _ in
+            if let err = err{
+                return completion(.failure(.genericError(err)))
+            }else {return completion(.success(songs))}
+        }
+    }
+    func getTopSongs(completion: @escaping(Result<[SpotifySong], SongError>)->Void){
+        guard let token = Strings.token else { return completion(.failure(.noToken))}
+        let url = URL(string: Strings.topSongSeedsURL)!
+        var request = URLRequest(url: url)
+        request.setValue("Bearer "+token, forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        URLSession.shared.dataTask(with: request) { data, res, err in
+            if let err = err{
+                return completion(.failure(.invalidInput))
+            }
+            guard let data = data else { return completion(.failure(.cannotDecode))}
+            do{
+                let songs = try JSONDecoder().decode(TrackObject.self, from: data)
+                return completion(.success(songs.items))
+            }catch{
+                return completion(.failure(.cannotDecode))
+            }
+        }.resume()
+    }
     func finishGrabbing(completion: @escaping()->Void){
         let url = URL(string: "https://api.spotify.com/v1/me")!
         var request = URLRequest(url: url)
@@ -158,41 +214,38 @@ class UserController{
             }
         }.resume()
     }
-    
+    func getArtistsFromDB(completion: @escaping([SpotifyArtist])->Void){
+        guard let currentUser = currentUser else { return}
+        let db = database.reference().child(currentUser.user.id).child("topArtists")
+        db.getData { err, snapshot in
+            if snapshot.exists(){
+                guard let val = snapshot.value as? [Any] else { return}
+                var artists: [SpotifyArtist] = []
+                for entry in val{
+                    guard let artist = SpotifyArtist.fromDBListEntry(entry) else {
+                        return}
+                    artists.append(artist)
+                }
+                return completion(artists)
+            }
+        }
+    }
     //MARK: genre function
     func grabMyGenresFromFireStore(completion: @escaping(Result<[String],FireError>)->Void){
-        let db = database.reference().child(currentBlankUser?.display_name ?? "nil")
+        let db = database.reference().child(currentBlankUser?.id ?? "nil")
         let dbRef = db.child("genres")
         dbRef.getData { err, snapshot in
             if let err = err{
                 return completion(.failure(.genericError(err)))
             }
             else if snapshot.exists(){
-                guard let val = snapshot.value as? [String: [String]] else { return completion(.failure(.noGenres))}
-                return completion(.success(val["genres"]!))
+                guard let val = snapshot.value as? [String] else { return completion(.failure(.noGenres))}
+                
+                return completion(.success(val))
             }else{
                 return completion(.failure(.noGenres))
             }
         }
-    }
-    func grabMyGenresFromAPI(completion: @escaping(Result<[String], FireError>)->Void){
-        guard let token = Strings.token else { return completion(.failure(.noAuth))}
-        let url = URL(string: Strings.genreSeedsURL)!
-        var request = URLRequest(url: url)
-        request.setValue("Bearer "+token, forHTTPHeaderField: "Authorization")
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error{
-                //print(error)
-                return completion(.failure(.genericError(error)))
-            }
-            guard let data = data else { return completion(.failure(.noGenres))}
-            do{
-                let genreObject = try JSONDecoder().decode(ModelData.self, from: data)
-                completion(.success(genreObject.genres))
-            }catch{
-                return completion(.failure(.decodingError))
-            }
-        }.resume()
     }
     func grabGenresForExternalUser(id: String, completion: @escaping(Result<[String], FireError>) ->Void){
         let db = database.reference().child(id)
@@ -201,12 +254,26 @@ class UserController{
             if let _ = error{
                 return completion(.failure(.noGenres))
             }else if snapshot.exists(){
-                guard let val = snapshot.value as? [String: [String]] else { return completion(.failure(.noGenres))}
-                return completion(.success(val["genres"]!))
+                guard let val = snapshot.value as? [String] else {
+                    return completion(.failure(.noGenres))}
+                return completion(.success(val))
             }
             else{
                 return completion(.failure(.noGenres))
             }
+        }
+    }
+    func saveMyGenresToFireStore(completion: @escaping(Result<[String], FireError>)->Void){
+        guard let userData = currentUser else { return completion(.failure(.notInitializedUser))}
+        let db = database.reference().child(currentUser?.user.id ?? "nil")
+        let dbRef = db.child("genres")
+        let dict = userData.genres
+        dbRef.setValue(dict){
+            error, _ in
+            if let error = error{
+                return completion(.failure(.genericError(error)))
+            }
+            else {self.saveID();return completion(.success(userData.genres))}
         }
     }
     func grabGenresForSelf(completion: @escaping(Result<[String], FireError>) ->Void){
@@ -231,17 +298,44 @@ class UserController{
             }
         }
     }
-    func saveMyGenresToFireStore(completion: @escaping(Result<[String], FireError>)->Void){
-        guard let userData = currentUser else { return completion(.failure(.notInitializedUser))}
-        let db = database.reference().child(currentUser?.user.display_name ?? "nil")
-        let dbRef = db.child("genres")
-        let dict: [String:[String]] = ["genres": userData.genres]
-        dbRef.setValue(dict){
-            error, _ in
+    func grabMyGenresFromAPI(completion: @escaping(Result<[String], FireError>)->Void){
+        guard let token = Strings.token else { return completion(.failure(.noAuth))}
+        let url = URL(string: Strings.topArtistSeedsURL)!
+        var request = URLRequest(url: url)
+        request.setValue("Bearer "+token, forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error{
+                //print(error)
                 return completion(.failure(.genericError(error)))
             }
-            else {return completion(.success(userData.genres))}
-        }
+            guard let data = data else { return completion(.failure(.noGenres))}
+            do{
+                let object = try JSONDecoder().decode(ArtistObject.self, from: data)
+                var genres: [String] = []
+                for artist in object.items{
+                    for genre in artist.genres{
+                        if genres.contains(genre){}else{
+                            genres.append(genre)
+                        }
+                    }
+                }
+                self.saveArtistsToDB(artists: object.items) { _ in
+                    self.getTopSongs(){result in
+                        switch result{
+                        case .success(let songs):
+                            self.saveSongsToDB(songs: songs) { result in
+                                return completion(.success(genres))
+                            }
+                        case .failure(let err):
+                            return completion(.failure(.genericError(err)))
+                        }
+                    }
+                }
+                
+            }catch{
+                return completion(.failure(.decodingError))
+            }
+        }.resume()
     }
 }

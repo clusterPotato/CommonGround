@@ -14,10 +14,12 @@ struct Strings{
     static let encryptionSalt = "QwabGYrkJWkvt389xqDKkQIPIcKUg8Ns"
     static let spotifyApiBase = "https://spotty-common-ground.herokuapp.com/api/token"
     static let spotifyRedirectURI = "commonGround://open"
-    static let spotifyApiAuthURL = "https://accounts.spotify.com/authorize?client_id=\(client_id)&response_type=code&redirect_uri=\(spotifyRedirectURI)&scope=playlist-modify-public"
+    static let spotifyApiAuthURL = "https://accounts.spotify.com/authorize?client_id=\(client_id)&response_type=code&redirect_uri=\(spotifyRedirectURI)&scope=playlist-modify-public%20user-top-read"
     static let spotifyApiOauthURL = "https://accounts.spotify.com/api/token"
     static var openURLString: String?
     static var oauthCode: String?
     static var token: String?
     static let genreSeedsURL = "https://api.spotify.com/v1/recommendations/available-genre-seeds"
+    static let topArtistSeedsURL = "https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term"
+    static let topSongSeedsURL = "https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term"
 }
