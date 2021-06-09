@@ -15,10 +15,10 @@ class LoginVC: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         observer = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [unowned self] notification in
-            print("launched with \(Strings.openURLString)")
+            //print("launched with \(Strings.openURLString)")
             EndUserController.shared.testForCodeExist()
             UserController.shared.grabCurrentUser {
-                print("configured")
+                //print("configured")
                 guard let user = UserController.shared.currentUser else { return}
                 DispatchQueue.main.async{
                     showToast(message: "Welcome \(user.user.display_name)!")
@@ -47,7 +47,7 @@ class LoginVC: UIViewController{
         let nextVC = sb.instantiateViewController(identifier: "Picker")
         nextVC.modalPresentationStyle = .fullScreen
         present(nextVC, animated: true) {
-            //print("pp®")
+            ////print("pp®")
         }
     }
     //MARK: style

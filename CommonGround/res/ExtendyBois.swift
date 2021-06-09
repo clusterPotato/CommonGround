@@ -85,19 +85,83 @@ extension UserPickVC: UserListChangedHandler{
     func dataChanged() {
         DispatchQueue.main.async {
             self.recentUsersCollectionView.reloadData()
-            //print("delegate data changed")
+            ////print("delegate data changed")
         }
     }
     
     
 }
 extension SpotifyArtist{
-    static func fromDBListEntry(_ t: Any)->SpotifyArtist?{
-        guard let t = t as? [String: Any] else { return nil}
+    static func fromDBListEntry(_ t: Any)->SpotifyArtist{
+        let t = t as! [String: Any]
         let genres = t["genres"] as? [String] ?? []
-        guard let id = t["id"] as? String else { return nil}
-        guard let name = t["name"] as? String else { return nil}
-        guard let uri = t["uri"] as? String else { return nil}
+        let id = t["id"] as? String ?? ""
+        let name = t["name"] as? String ?? ""
+        let uri = t["uri"] as? String ?? ""
         return SpotifyArtist(uri: uri, name: name, id: id, genres: genres)
+    }
+}
+extension GenrelessSpotifyArtist{
+    static func fromDBListEntry(_ t: Any)->GenrelessSpotifyArtist{
+        let t = t as! [String: Any]
+        let id = t["id"] as? String ?? ""
+        let name = t["name"] as? String ?? ""
+        let uri = t["uri"] as? String ?? ""
+        return GenrelessSpotifyArtist(uri: uri, name: name, id: id)
+    }
+    static func arrayFromDBListEntry(_ t: Any)->[GenrelessSpotifyArtist]{
+        var retVar: [GenrelessSpotifyArtist] = []
+        guard let t = t as? [Any] else { return []}
+        for s in t{
+            guard let s = s as? [String: String] else { break}
+            let id = s["id"] ?? ""
+            let name = s["name"] ?? ""
+            let uri = s["uri"] ?? ""
+            let x = GenrelessSpotifyArtist(uri: uri, name: name, id: id)
+            retVar.append(x)
+        }
+        return retVar
+    }
+}
+extension SpotifySong{
+    static func fromDBListEntry(_ t: Any)->SpotifySong{
+        let t = t as! [String: Any]
+        let artists = GenrelessSpotifyArtist.arrayFromDBListEntry(t["artists"])
+        let album = SpotifyAlbum.fromDBListEntry(t["album"])
+        let id = t["id"] as? String ?? ""
+        let url: URL? = t["preview_url"] as? URL ?? nil
+        let name = t["name"] as? String ?? ""
+        let uri = t["uri"] as? String ?? ""
+        return SpotifySong(artists: artists, album: album, uri: uri, name: name, preview_url: url, id: id)
+    }
+}
+extension SpotifyAlbum{
+    static func fromDBListEntry(_ t: Any)->SpotifyAlbum{
+        //print(t)
+        let t = t as! [String: Any]
+        let artists = GenrelessSpotifyArtist.arrayFromDBListEntry(t["artists"])
+        let images = SpotifyAlbumArt.arrayFromDBListEntry(t["images"])
+        let name = t["name"] as? String ?? ""
+        let uri = t["uri"] as? String ?? ""
+        let release_date = t["release_date"] as? String ?? ""
+        return SpotifyAlbum(artists: artists, name: name, images: images, uri: uri, release_date: release_date)
+    }
+}
+extension SpotifyAlbumArt{
+    static func fromDBListEntry(_ t: Any)->SpotifyAlbumArt{
+        let t = t as! [String: Any]
+        let url = t["url"] as? String ?? ""
+        return SpotifyAlbumArt(url: URL(string: url)!)
+    }
+    static func arrayFromDBListEntry(_ t: Any)->[SpotifyAlbumArt]{
+        var retvar: [SpotifyAlbumArt] = []
+        let t = t as! [Any]
+        for s in t{
+            guard let s = s as? [String: String] else { break}
+            let url = s["url"] as? String ?? ""
+            let x = SpotifyAlbumArt(url: URL(string: url)!)
+            retvar.append(x)
+        }
+        return retvar
     }
 }

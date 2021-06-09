@@ -54,14 +54,20 @@ class UserPickVC: UIViewController{
     func loadUp(){
         stylizeViews()
     }
+    @objc func removeAddAlert(){
+        addAlert.removeFromSuperview()
+    }
     func constrainAddView(){
-        addAlert.anchor(top: nil, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, paddingTop: 0, paddingBottom: -32, paddingLeading: 0, paddingtrailing: 0, width: nil, height: 256)
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(removeAddAlert))
+        swipeDown.direction = .down
+        self.view.addGestureRecognizer(swipeDown)
+        addAlert.anchor(top: nil, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeading: 0, paddingtrailing: 0, width: nil, height: 256)
         usernameField.delegate = self
         plusButton.addTarget(self, action: #selector(addUser), for: .touchUpInside)
         addUserLabel.anchor(top: addAlert.topAnchor, bottom: nil, leading: addAlert.leadingAnchor, trailing: addAlert.trailingAnchor, paddingTop: 8, paddingBottom: 0, paddingLeading: 8, paddingtrailing: 8, width: nil, height: nil)
-        add_helpButton.anchor(top: addUserLabel.bottomAnchor, bottom: nil, leading: nil, trailing: addAlert.trailingAnchor, paddingTop: 32, paddingBottom: 0, paddingLeading: 0, paddingtrailing: 16, width: 48, height: 48)
+        add_helpButton.anchor(top: addUserLabel.bottomAnchor, bottom: nil, leading: nil, trailing: addAlert.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeading: 0, paddingtrailing: 16, width: 48, height: 48)
         usernameField.anchor(top: add_helpButton.topAnchor, bottom: add_helpButton.bottomAnchor, leading: addAlert.leadingAnchor, trailing: add_helpButton.leadingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeading: 16, paddingtrailing: 72, width: nil, height: nil)
-        plusButton.anchor(top: nil, bottom: addAlert.bottomAnchor, leading: addAlert.leadingAnchor, trailing: addAlert.trailingAnchor, paddingTop: 0, paddingBottom: 16, paddingLeading: 72, paddingtrailing: 72, width: nil, height: nil)
+        plusButton.anchor(top: nil, bottom: addAlert.bottomAnchor, leading: addAlert.leadingAnchor, trailing: addAlert.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeading: 72, paddingtrailing: 72, width: nil, height: nil)
         plusButton.layer.cornerRadius = 20
         plusButton.backgroundColor = UIColor(named: "ButtonColor")
     }

@@ -195,13 +195,14 @@
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Spotify username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GRr-Da-4dB">
                                         <rect key="frame" x="16" y="84.333333333333371" width="243" height="34"/>
-                                        <color key="backgroundColor" name="bg"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" name="TextColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add User" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6h6-AV-NfS">
                                         <rect key="frame" x="16" y="32" width="358" height="20.333333333333329"/>
+                                        <color key="tintColor" name="TextColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" name="TextColor"/>
                                         <nil key="highlightedColor"/>
@@ -233,7 +234,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" name="bg"/>
+                                <color key="backgroundColor" name="dialogue_bg"/>
                                 <constraints>
                                     <constraint firstItem="GRr-Da-4dB" firstAttribute="top" secondItem="6h6-AV-NfS" secondAttribute="bottom" constant="32" id="65W-Ge-J5f"/>
                                     <constraint firstItem="GRr-Da-4dB" firstAttribute="leading" secondItem="OJl-uB-nYr" secondAttribute="leading" constant="16" id="UJ0-Qf-aFs"/>
@@ -422,7 +423,7 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" name="AccentColor"/>
+                                <color key="backgroundColor" name="bg"/>
                                 <constraints>
                                     <constraint firstItem="BsK-3J-NYb" firstAttribute="leading" secondItem="QlG-Yw-07e" secondAttribute="leading" constant="16" id="3tf-Wa-oEz"/>
                                     <constraint firstItem="QlG-Yw-07e" firstAttribute="leading" secondItem="KVh-xt-WiZ" secondAttribute="leading" id="416-2D-lpn"/>
@@ -512,27 +513,27 @@ punk</string>
         <scene sceneID="AZC-mo-H2S">
             <objects>
                 <viewController id="JdQ-Mh-pqh" customClass="LoginVC" customModule="CommonGround" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="cpx-rY-1Yb">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="cpx-rY-1Yb">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sgn-99-ljJ">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sgn-99-ljJ">
                                 <rect key="frame" x="0.0" y="0.0" width="390" height="94.333333333333329"/>
                                 <color key="backgroundColor" name="AccentColor"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Common Ground!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AKp-GF-YEx">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Welcome to Common Ground!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AKp-GF-YEx">
                                 <rect key="frame" x="13.666666666666657" y="163.33333333333334" width="363" height="31.666666666666657"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                                 <color key="textColor" name="TextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please login to Spotify to continue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="blo-Bd-slh">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Please login to Spotify to continue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="blo-Bd-slh">
                                 <rect key="frame" x="65" y="227" width="260" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="TextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h2g-tr-lch">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h2g-tr-lch">
                                 <rect key="frame" x="67" y="730" width="256" height="64"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="256" id="8AA-Qr-qiI"/>
@@ -547,7 +548,7 @@ punk</string>
                                     <action selector="nextButtonPressed:" destination="JdQ-Mh-pqh" eventType="touchUpInside" id="uK7-f5-2h5"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IGJ-0g-F8Z">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IGJ-0g-F8Z">
                                 <rect key="frame" x="67" y="320" width="256" height="256"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="256" id="GPu-sp-asf"/>
@@ -605,7 +606,10 @@ punk</string>
             <color red="0.0" green="0.12399999797344208" blue="0.10499999672174454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="bg">
-            <color red="0.0" green="1" blue="0.98799997568130493" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.93300002813339233" green="1" blue="0.98799997568130493" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="dialogue_bg">
+            <color red="0.5180783043791668" green="0.77019997942144336" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

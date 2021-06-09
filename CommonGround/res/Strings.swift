@@ -21,5 +21,6 @@ struct Strings{
     static var token: String?
     static let genreSeedsURL = "https://api.spotify.com/v1/recommendations/available-genre-seeds"
     static let topArtistSeedsURL = "https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term"
+    static let recommendationsURL = "https://api.spotify.com/v1/recommendations"
     static let topSongSeedsURL = "https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term"
 }

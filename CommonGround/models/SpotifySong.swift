@@ -11,6 +11,7 @@ struct SpotifySong: Codable{
     let album: SpotifyAlbum
     let uri: String
     let name: String
+    let preview_url: URL?
     let id: String
 }
 struct SpotifyAlbum: Codable{
@@ -39,4 +40,7 @@ struct ArtistObject: Codable{
 }
 struct TrackObject: Codable{
     let items: [SpotifySong]
+}
+struct TrackData: Codable{
+    let tracks: [SpotifySong]
 }

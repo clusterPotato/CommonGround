@@ -42,7 +42,7 @@ class UserCell: UICollectionViewCell{
         guard let imageURL = URL(string: user.user.images[0].url) else { return}
         URLSession.shared.dataTask(with: URLRequest(url:imageURL)) { data, resp, err in
             if let err = err{
-                //print(err)
+                ////print(err)
             }else{
                 guard let data = data else { return}
                 guard let image = UIImage(data: data) else { return}
