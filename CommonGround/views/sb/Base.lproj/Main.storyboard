@@ -45,7 +45,7 @@
                                                         <action selector="buttonPress:" destination="jOJ-98-GhR" eventType="touchUpInside" id="0Ld-hT-R5R"/>
                                                     </connections>
                                                 </button>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="niggden" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QJf-Z5-Lhe">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blank_man" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QJf-Z5-Lhe">
                                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                                     <color key="backgroundColor" name="bg"/>
                                                     <constraints>
@@ -500,7 +500,7 @@
                                 </constraints>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading your information" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWN-wi-tYW">
-                                <rect key="frame" x="0.0" y="490" width="390" height="31.333333333333371"/>
+                                <rect key="frame" x="0.0" y="490" width="390" height="31.666666666666629"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <color key="textColor" name="TextColor"/>
                                 <nil key="highlightedColor"/>
@@ -588,7 +588,7 @@ punk</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="748" text="Please login to Spotify to continue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="blo-Bd-slh">
-                                <rect key="frame" x="21" y="242.33333333333337" width="348.33333333333331" height="31"/>
+                                <rect key="frame" x="21" y="242.33333333333337" width="348" height="31"/>
                                 <fontDescription key="fontDescription" name="NotoSansOriya" family="Noto Sans Oriya" pointSize="22"/>
                                 <color key="textColor" name="TextColor"/>
                                 <nil key="highlightedColor"/>
@@ -657,11 +657,11 @@ punk</string>
         </scene>
     </scenes>
     <resources>
+        <image name="blank_man" width="128" height="128"/>
         <image name="chevron.forward.2" catalog="system" width="128" height="105"/>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="music placeholder" width="225" height="225"/>
         <image name="music.note.list" catalog="system" width="128" height="115"/>
-        <image name="niggden" width="1160" height="629"/>
         <image name="plus.app" catalog="system" width="128" height="114"/>
         <image name="questionmark" catalog="system" width="96" height="128"/>
         <image name="spotify" width="930" height="949"/>
