@@ -7,19 +7,38 @@
 
 import UIKit
 import AVKit
-class TinderViewController: UIViewController{
+protocol MatchDisplayDelegate: AnyObject{
+    func matchWasMade()
+    func likedButDidNotMatch()
+}
+class TinderViewController: UIViewController, MatchDisplayDelegate{
+    func likedButDidNotMatch() {
+        makeLikesHitstring {
+            
+        }
+    }
+    
+    func matchWasMade() {
+        makeMatchHitstring {
+            
+        }
+    }
+    
     //MARK: outlets
     
+    
+    @IBOutlet weak var matchLabel: UILabel!
+    @IBOutlet weak var dislikedLabel: UILabel!
+    @IBOutlet weak var likedLabel: UILabel!
+    @IBOutlet weak var ImageButton: UIButton!
     @IBOutlet weak var container: UIView!
-    @IBOutlet weak var playButton: UIButton!
-    @IBOutlet weak var xbutton: UIButton!
-    @IBOutlet weak var heartbutton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var pictureView: UIImageView!
     @IBOutlet weak var artistLabel: UILabel!
     var player: AVAudioPlayer?
     var genreList: [String]?
     var topSongs: [SpotifySong] = []
+    var matching = false
     var topArtists:[SpotifyArtist] = []
     var currentlyDisplayedSong: SpotifySong?
     var containerTitle: String?
@@ -34,10 +53,12 @@ class TinderViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        SongsController.shared.matchDelegate = self
         guard let currentUser = UserController.shared.currentUser,
               let matchedUser = otherUserData else { return}
         containerTitle = "\(currentUser.user.id) && \(matchedUser.user.id)"
         pictureView.layer.cornerRadius = 10
+        self.sytlize()
         fillSeeds(){
             //print("seeds are \(self.seedArtists) : \(self.seedSongs)")
             self.url = self.constructURL()
@@ -59,7 +80,7 @@ class TinderViewController: UIViewController{
                                     self.setDisplay(song)
                                     SongsController.shared.setQueuePosition(containerTitle: title, userID: currentUser.user.id, position: pos + 1)
                                     self.addOneToQueue(){}
-                                    case .failure(let err):
+                                case .failure(let err):
                                     self.presentErrorToUser(localizedError: err)
                                 }
                             }}
@@ -176,7 +197,6 @@ class TinderViewController: UIViewController{
             DispatchQueue.main.async{
                 var image = UIImage(systemName: "pause")!
                 image = image.withRenderingMode(.alwaysOriginal)
-                self.playButton.setImage(image, for: .normal)
             }
         } catch let error as NSError {
             //self.player = nil
@@ -187,9 +207,7 @@ class TinderViewController: UIViewController{
         
     }
     func sytlize(){
-        playButton.setRadiusWithShadow(playButton.layer.bounds.height/2)
-        xbutton.setRadiusWithShadow(xbutton.layer.bounds.height/2)
-        heartbutton.setRadiusWithShadow(heartbutton.layer.bounds.height/2)
+        ImageButton.addTarget(self, action: #selector(playPreviewButtonPressed(_:)), for: .touchDownRepeat)
         let gestureLeft = UISwipeGestureRecognizer(target: self, action: #selector(dislikeCurrentSong))
         gestureLeft.direction = .left
         let gestureRight = UISwipeGestureRecognizer(target: self, action: #selector(likeCurrentSong))
@@ -219,6 +237,9 @@ class TinderViewController: UIViewController{
         }.resume()
     }
     //MARK: actions
+    @objc func pressedImage(){
+        
+    }
     @IBAction func backButtonPressed(_ sender: Any) {
         //back button was pressed
         dismiss(animated: true, completion: nil)
@@ -243,14 +264,14 @@ class TinderViewController: UIViewController{
             }
         }
     }
-    @IBAction func heartButtonPressed(_ sender: Any) {
+    @objc func heartButtonPressed(_ sender: Any) {
         likeCurrentSong()
     }
-    @IBAction func xButtonPressed(_ sender: Any) {
+    @objc func xButtonPressed(_ sender: Any) {
         dislikeCurrentSong()
         
     }
-    @IBAction func playPreviewButtonPressed(_ sender: Any) {
+    @objc func playPreviewButtonPressed(_ sender: Any) {
         playSongDemo()
     }
     @objc func dislikeCurrentSong(){
@@ -269,14 +290,16 @@ class TinderViewController: UIViewController{
             }
         }
         addOneToQueue(){}
-        SongsController.shared.getQueuePosition(containerTitle: title, userID: currentUser.user.id) { pos in
-            SongsController.shared.setQueuePosition(containerTitle: title, userID: currentUser.user.id, position: pos+1)
-            self.loadNextSong{
-                song in
-                self.setDisplay(song)
+        makeDislikesHitstring{
+            SongsController.shared.getQueuePosition(containerTitle: title, userID: currentUser.user.id) { pos in
+                SongsController.shared.setQueuePosition(containerTitle: title, userID: currentUser.user.id, position: pos+1)
+                self.loadNextSong{
+                    song in
+                    self.setDisplay(song)
+                }
             }
+            self.playerFinished()
         }
-        playerFinished()
     }
     @objc func likeCurrentSong(){
         guard let title = containerTitle,
@@ -295,20 +318,73 @@ class TinderViewController: UIViewController{
         addOneToQueue(){}
         SongsController.shared.getQueuePosition(containerTitle: title, userID: currentUser.user.id) { pos in
             SongsController.shared.setQueuePosition(containerTitle: title, userID: currentUser.user.id, position: pos+1)
+            
             self.loadNextSong{
                 song in
                 self.setDisplay(song)
             }
         }
-        playerFinished()
+        self.playerFinished()
+        
+        
     }
     @objc func playerFinished(){
         player?.stop()
         DispatchQueue.main.async{
             var image = UIImage(systemName: "play")!
             image = image.withRenderingMode(.alwaysOriginal)
-            self.playButton.setImage(image, for: .normal)
         }
+    }
+    func makeLikesHitstring(completion: @escaping()->Void){
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 1) {
+                self.likedLabel.alpha = 1
+            } completion: { success in
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 1, animations: {
+                        self.likedLabel.alpha = 0
+                    }, completion: {
+                        _ in
+                        completion()
+                    })
+                }
+            }
+        }
+        
+    }
+    func makeDislikesHitstring(completion: @escaping()->Void){
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 1) {
+                self.dislikedLabel.alpha = 1
+            } completion: { success in
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 1, animations: {
+                        self.dislikedLabel.alpha = 0
+                    }, completion: {
+                        _ in
+                        completion()
+                    })
+                }
+            }
+        }
+        
+    }
+    func makeMatchHitstring(completion: @escaping()->Void){
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 1) {
+                self.matchLabel.alpha = 1
+            } completion: { success in
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 1, animations: {
+                        self.matchLabel.alpha = 0
+                    }, completion: {
+                        _ in
+                        completion()
+                    })
+                }
+            }
+        }
+        
     }
     @objc func playSongDemo(){
         guard let url = currentlyDisplayedSong?.preview_url else {
@@ -322,7 +398,6 @@ class TinderViewController: UIViewController{
                 DispatchQueue.main.async{
                     var image = UIImage(systemName: "play")!
                     image = image.withRenderingMode(.alwaysOriginal)
-                    self.playButton.setImage(image, for: .normal)
                 }
             }else{
                 downloadFileFromURL(url: url)

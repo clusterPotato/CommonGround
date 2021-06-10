@@ -10,6 +10,7 @@ import Firebase
 class SongsController{
     static let shared = SongsController()
     let baseURL = "https://api.spotify.com/v1/tracks/"
+    var matchDelegate: MatchDisplayDelegate?
     let testID = "11dFghVXANMlKmJXsNCbNl"
     func getUserPlaylists(){
         
@@ -223,6 +224,7 @@ class SongsController{
                                 self.matchSong(song: song, containerTitle: containerTitle)
                             }
                         }else{
+                            self.matchDelegate?.likedButDidNotMatch()
                             saveData[song.id] = current.user.id
                         }
                         self.saveRelevantSongs(dbRef, saveData: saveData) {
@@ -615,6 +617,7 @@ class SongsController{
         }
     }
     func matchSong(song: SpotifySong, containerTitle: String){
+        matchDelegate?.matchWasMade()
         updateMatched(id: song.id, containerTitle: containerTitle)
         addSongToPlaylist(song: song, containerTitle: containerTitle)
     }

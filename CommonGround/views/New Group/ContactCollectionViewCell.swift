@@ -74,7 +74,7 @@ class UserCell: UICollectionViewCell{
         }.resume()
     }
     override func prepareForReuse() {
-        pictureView.image = UIImage(named: "blank_man")
+        pictureView.image = UIImage(named: "niggden")
         
     }
     

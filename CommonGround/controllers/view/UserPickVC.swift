@@ -73,7 +73,7 @@ class UserPickVC: UIViewController{
         addAlert.removeFromSuperview()
     }
     @objc func helpPressed(){
-        let alertVC = UIAlertController(title: "Hep", message: "To partner with somebody, you must have their Spotify ID and they must have yours. You can share it via the share button in the top right", preferredStyle: .alert)
+        let alertVC = UIAlertController(title: "Help", message: "To partner with somebody, you must have their Spotify ID and they must have yours. You can share it via the share button in the top right", preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .default))
         present(alertVC, animated: true, completion: nil)
     }

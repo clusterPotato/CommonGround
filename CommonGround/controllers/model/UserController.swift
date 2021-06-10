@@ -14,6 +14,7 @@ class UserController{
     static let shared = UserController()
     var currentUser: UserData?
     var currentBlankUser: User?
+    
     var currentUserGenreList:[String]?
     var savedUsers: [UserData] = []{didSet{
         delegate?.dataChanged()
