@@ -24,7 +24,6 @@ struct Strings{
     static let recommendationsURL = "https://api.spotify.com/v1/recommendations"
     static let topSongSeedsURL = "https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term"
     static let apiPlaylistGetPostURL = "https://api.spotify.com/v1/me/playlists"
-    //static let playlistCoverUploadPUTURL = "https://api.spotify.com/v1/playlists/{playlist_id}/images"
     ///replace USER1 and USER2 with the respective user display names
     static let playlist_name_schema = "CommonGround Playlist - USER1 and USER2"
     ///replace{playlist_id}with...you guessed it

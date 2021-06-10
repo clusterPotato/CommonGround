@@ -36,7 +36,7 @@ class UserController{
         //print(dict)
         dbRef.setValue(dict){
             error, _ in
-            if let error = error{
+            if let _ = error{
                 //print(error)
                 return
             }else{
@@ -71,7 +71,7 @@ class UserController{
         let db = database.reference().child(currentUser?.user.id ?? "nil")
         let dbRef = db.child("previousUsers")
         dbRef.getData { err, snapshot in
-            if let err = err{
+            if let _ = err{
                 ////print("error",err)
                 return
             }
@@ -86,7 +86,7 @@ class UserController{
                         case .success(let genres):
                             let userdata = UserData(user: user, genres: genres)
                             self.savedUsers.append(userdata)
-                        case .failure(let err):
+                        case .failure(_):
                             let userdata = UserData(user: user, genres: [])
                             self.savedUsers.append(userdata)
                         }
@@ -199,20 +199,19 @@ class UserController{
         ////print(request.allHTTPHeaderFields)
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error{
-                //print(error)
+                print(error)
                 return
             }
             if let respomse = response as? HTTPURLResponse{
-                //print(respomse.statusCode)
+                print(respomse.statusCode)
             }
-            //print("response code")
             if let data = data{
-                //print(String(data: data, encoding: .utf8))
+                print(String(data: data, encoding: .utf8))
                 do{
                     self.currentBlankUser = try JSONDecoder().decode(User.self, from: data)
                     return completion()
                 }catch{
-                    //print("oops")
+                    print("oops")
                 }
             }
         }.resume()

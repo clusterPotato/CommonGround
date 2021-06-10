@@ -9,18 +9,27 @@ class LoginVC: UIViewController{
     //MARK: outlets
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
-    
+    var loading: LoadingViewController?
     
     private var observer: NSObjectProtocol?
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         observer = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [unowned self] notification in
-            //print("launched with \(Strings.openURLString)")
+            print("launched with \(Strings.openURLString)")
             EndUserController.shared.testForCodeExist()
+            if let code = Strings.openURLString{
+                let sb = UIStoryboard(name: "Main", bundle: nil)
+                let vc = sb.instantiateViewController(identifier: "loading") as! LoadingViewController
+                vc.modalPresentationStyle = .fullScreen
+                self.loading = vc
+                present(loading!, animated: true, completion: nil)
+            }
             UserController.shared.grabCurrentUser {
                 //print("configured")
-                guard let user = UserController.shared.currentUser else { return}
+                guard let user = UserController.shared.currentUser else {
+                    return}
                 DispatchQueue.main.async{
+                    loading?.dismiss(animated: true, completion: nil)
                     showToast(message: "Welcome \(user.user.display_name)!")
                     UIView.animate(withDuration: 1) {
                         loginButton.setImage(UIImage(named: "spotify_gray"), for: .normal)
@@ -47,7 +56,7 @@ class LoginVC: UIViewController{
         let nextVC = sb.instantiateViewController(identifier: "Picker")
         nextVC.modalPresentationStyle = .fullScreen
         present(nextVC, animated: true) {
-            ////print("pp®")
+            print("pp®")
         }
     }
     //MARK: style

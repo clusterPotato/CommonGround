@@ -23,6 +23,7 @@ class TinderViewController: UIViewController{
     var topArtists:[SpotifyArtist] = []
     var currentlyDisplayedSong: SpotifySong?
     var containerTitle: String?
+    var loading: LoadingViewController?
     
     //MARK: properties
     var otherUserData: UserData?
@@ -36,13 +37,11 @@ class TinderViewController: UIViewController{
         guard let currentUser = UserController.shared.currentUser,
               let matchedUser = otherUserData else { return}
         containerTitle = "\(currentUser.user.id) && \(matchedUser.user.id)"
-        
+        pictureView.layer.cornerRadius = 10
         fillSeeds(){
             //print("seeds are \(self.seedArtists) : \(self.seedSongs)")
             self.url = self.constructURL()
-            DispatchQueue.main.async {
-                self.sytlize()
-            }
+            
             guard let title = self.containerTitle else { return}
             SongsController.shared.getQueuePosition(containerTitle: title, userID: currentUser.user.id) { pos in
                 SongsController.shared.setQueuePosition(containerTitle: title, userID: currentUser.user.id, position: pos)
@@ -60,7 +59,7 @@ class TinderViewController: UIViewController{
                                     self.setDisplay(song)
                                     SongsController.shared.setQueuePosition(containerTitle: title, userID: currentUser.user.id, position: pos + 1)
                                     self.addOneToQueue(){}
-                                case .failure(let err):
+                                    case .failure(let err):
                                     self.presentErrorToUser(localizedError: err)
                                 }
                             }}

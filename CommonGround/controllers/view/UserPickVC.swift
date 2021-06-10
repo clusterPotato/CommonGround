@@ -43,10 +43,21 @@ class UserPickVC: UIViewController{
         width = view.bounds.width
         recentUsersCollectionView.delegate = self
         recentUsersCollectionView.dataSource = self
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.keyboardWillShow(notification:)),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide(notification:)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
         loadUp()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    @objc func keyboardNotification(notification: NSNotification) {
+        print("kb notif")
     }
     func presentAddUserVC(){
         UIView.animate(withDuration: 0.5) {
@@ -66,18 +77,23 @@ class UserPickVC: UIViewController{
         alertVC.addAction(UIAlertAction(title: "OK", style: .default))
         present(alertVC, animated: true, completion: nil)
     }
+    
     func constrainAddView(){
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(removeAddAlert))
         swipeDown.direction = .down
         self.view.addGestureRecognizer(swipeDown)
         add_helpButton.addTarget(self, action: #selector(helpPressed), for: .touchUpInside)
-        addAlert.anchor(top: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeading: 0, paddingtrailing: 0, width: nil, height: 256)
+        addAlert.anchor(top: nil, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeading: 0, paddingtrailing: 0, width: nil, height: 256)
         usernameField.delegate = self
+        usernameField.layer.borderColor = UIColor(named: "TextColor")!.cgColor
+        usernameField.layer.borderWidth = 2
+        usernameField.layer.cornerRadius = 2
+        usernameField.attributedPlaceholder = NSAttributedString(string: "Enter Username Here", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "TextColor")])
         plusButton.addTarget(self, action: #selector(addUser), for: .touchUpInside)
         addUserLabel.anchor(top: addAlert.topAnchor, bottom: nil, leading: addAlert.leadingAnchor, trailing: addAlert.trailingAnchor, paddingTop: 8, paddingBottom: 0, paddingLeading: 8, paddingtrailing: 8, width: nil, height: nil)
         add_helpButton.anchor(top: addUserLabel.bottomAnchor, bottom: nil, leading: nil, trailing: addAlert.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeading: 0, paddingtrailing: 16, width: 48, height: 48)
         usernameField.anchor(top: add_helpButton.topAnchor, bottom: add_helpButton.bottomAnchor, leading: addAlert.leadingAnchor, trailing: add_helpButton.leadingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeading: 16, paddingtrailing: 72, width: nil, height: nil)
-        plusButton.anchor(top: nil, bottom: addAlert.bottomAnchor, leading: addAlert.leadingAnchor, trailing: addAlert.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeading: 72, paddingtrailing: 72, width: nil, height: nil)
+        plusButton.anchor(top: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: addAlert.leadingAnchor, trailing: addAlert.trailingAnchor, paddingTop: 0, paddingBottom: -16, paddingLeading: 72, paddingtrailing: 72, width: nil, height: nil)
         plusButton.layer.cornerRadius = 20
         plusButton.backgroundColor = UIColor(named: "ButtonColor")
     }
@@ -130,6 +146,15 @@ class UserPickVC: UIViewController{
             }
         }
     }
+    @objc func keyboardWillShow(notification: NSNotification) {
+            guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {return}
+            
+            self.view.frame.origin.y = 0 - keyboardSize.height
+        }
+       
+    @objc func keyboardWillHide(notification: NSNotification) {
+            self.view.frame.origin.y = 0
+        }
 }
 extension UserPickVC: UICollectionViewDelegate, UICollectionViewDataSource, UserCellDelegate, AddManCellDelegate, UICollectionViewDelegateFlowLayout{
     func deleted() {
@@ -161,7 +186,7 @@ extension UserPickVC: UICollectionViewDelegate, UICollectionViewDataSource, User
         if let cell = self.previouslySelectedCell{
             cell.layer.borderWidth=0
         }
-       
+        
         self.previouslySelectedCell=sender
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int {

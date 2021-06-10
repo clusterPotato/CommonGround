@@ -209,12 +209,13 @@
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OJl-uB-nYr">
                                 <rect key="frame" x="0.0" y="588" width="390" height="256"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Spotify username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GRr-Da-4dB">
+                                    <textField contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Spotify username" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="GRr-Da-4dB">
                                         <rect key="frame" x="16" y="84.333333333333371" width="243" height="34"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" name="TextColor"/>
                                         <color key="textColor" name="TextColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="done"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add User" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6h6-AV-NfS">
                                         <rect key="frame" x="16" y="32" width="358" height="20.333333333333329"/>
@@ -379,7 +380,7 @@
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="BsK-3J-NYb">
-                                        <rect key="frame" x="16" y="368" width="360" height="63"/>
+                                        <rect key="frame" x="0.0" y="368" width="360" height="63"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="252" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mf0-J8-2hA">
                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -398,10 +399,9 @@
                                 </subviews>
                                 <color key="backgroundColor" name="bg"/>
                                 <constraints>
-                                    <constraint firstItem="BsK-3J-NYb" firstAttribute="leading" secondItem="QlG-Yw-07e" secondAttribute="leading" constant="16" id="3tf-Wa-oEz"/>
+                                    <constraint firstItem="BsK-3J-NYb" firstAttribute="centerX" secondItem="QlG-Yw-07e" secondAttribute="centerX" id="46H-vz-bUO"/>
                                     <constraint firstAttribute="bottom" secondItem="BsK-3J-NYb" secondAttribute="bottom" id="Dwe-vl-yej"/>
                                     <constraint firstItem="QlG-Yw-07e" firstAttribute="top" secondItem="KVh-xt-WiZ" secondAttribute="top" id="W13-5Z-D5c"/>
-                                    <constraint firstItem="BsK-3J-NYb" firstAttribute="trailing" secondItem="QlG-Yw-07e" secondAttribute="trailing" constant="16" id="aRT-pU-jvV"/>
                                     <constraint firstItem="QlG-Yw-07e" firstAttribute="centerX" secondItem="KVh-xt-WiZ" secondAttribute="centerX" id="gUG-2B-8EH"/>
                                     <constraint firstItem="BsK-3J-NYb" firstAttribute="top" secondItem="QlG-Yw-07e" secondAttribute="bottom" constant="8" id="u9p-bI-cgP"/>
                                 </constraints>
@@ -472,7 +472,6 @@
                             <constraint firstItem="QlG-Yw-07e" firstAttribute="width" secondItem="BJC-UT-SkR" secondAttribute="width" multiplier="0.923077" id="eVw-yq-m2o"/>
                             <constraint firstItem="MyX-o8-i28" firstAttribute="height" secondItem="u7W-Qf-23F" secondAttribute="height" id="mZT-QA-iJj"/>
                             <constraint firstItem="9Ic-mM-pCc" firstAttribute="centerX" secondItem="Pwf-3N-0XL" secondAttribute="centerX" id="sYq-7d-awN"/>
-                            <constraint firstItem="QlG-Yw-07e" firstAttribute="height" secondItem="BJC-UT-SkR" secondAttribute="height" multiplier="0.42654" id="u1k-de-u3A"/>
                             <constraint firstItem="pk5-bO-FJe" firstAttribute="height" secondItem="BJC-UT-SkR" secondAttribute="height" multiplier="0.111607" id="zhm-tt-d5g"/>
                         </constraints>
                     </view>
@@ -489,6 +488,46 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sqA-gN-Kpe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="163.768115942029" y="49.553571428571423"/>
+        </scene>
+        <!--Loading View Controller-->
+        <scene sceneID="HfJ-Am-hLo">
+            <objects>
+                <viewController storyboardIdentifier="loading" id="NOO-ya-fhn" customClass="LoadingViewController" customModule="CommonGround" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="OA4-Uz-S65">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="icS-zF-Z55">
+                                <rect key="frame" x="16" y="60" width="358" height="358"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="icS-zF-Z55" secondAttribute="height" multiplier="1:1" id="x4k-3Z-7wC"/>
+                                </constraints>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading your information" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWN-wi-tYW">
+                                <rect key="frame" x="0.0" y="490" width="390" height="31.333333333333371"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <color key="textColor" name="TextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="WhW-Eg-3rX"/>
+                        <color key="backgroundColor" name="bg"/>
+                        <constraints>
+                            <constraint firstItem="WhW-Eg-3rX" firstAttribute="trailing" secondItem="YWN-wi-tYW" secondAttribute="trailing" id="5IN-y6-szo"/>
+                            <constraint firstItem="YWN-wi-tYW" firstAttribute="top" secondItem="icS-zF-Z55" secondAttribute="bottom" constant="72" id="5ig-9x-9AG"/>
+                            <constraint firstItem="icS-zF-Z55" firstAttribute="leading" secondItem="WhW-Eg-3rX" secondAttribute="leading" constant="16" id="FaF-5q-N9q"/>
+                            <constraint firstItem="YWN-wi-tYW" firstAttribute="leading" secondItem="WhW-Eg-3rX" secondAttribute="leading" id="az7-3Q-CM6"/>
+                            <constraint firstItem="WhW-Eg-3rX" firstAttribute="trailing" secondItem="icS-zF-Z55" secondAttribute="trailing" constant="16" id="bfz-nm-FMj"/>
+                            <constraint firstItem="icS-zF-Z55" firstAttribute="top" secondItem="WhW-Eg-3rX" secondAttribute="top" constant="16" id="wFg-pT-2bu"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="icS-zF-Z55" id="i2U-Lw-p00"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wdC-an-04x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1373" y="-599"/>
         </scene>
         <!--Genre View Controller-->
         <scene sceneID="2gB-fp-T82">
@@ -644,7 +683,7 @@ punk</string>
             <color red="0.93300002813339233" green="1" blue="0.98799997568130493" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="dialogue_bg">
-            <color red="0.51800000667572021" green="0.76999998092651367" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81055994805316589" green="1" blue="0.7992375667798477" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
