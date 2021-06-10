@@ -22,7 +22,7 @@ class TinderViewController: UIViewController{
     var topSongs: [SpotifySong] = []
     var topArtists:[SpotifyArtist] = []
     var currentlyDisplayedSong: SpotifySong?
-    var queue:[SpotifySong] = []
+    var containerTitle: String?
     
     //MARK: properties
     var otherUserData: UserData?
@@ -33,37 +33,52 @@ class TinderViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let currentUser = UserController.shared.currentUser,
+              let matchedUser = otherUserData else { return}
+        containerTitle = "\(currentUser.user.id) && \(matchedUser.user.id)"
+        
         fillSeeds(){
             //print("seeds are \(self.seedArtists) : \(self.seedSongs)")
             self.url = self.constructURL()
             DispatchQueue.main.async {
                 self.sytlize()
             }
-            self.get2SongsReady__BEGINNING__()
-        }
-    }
-    
-    func get2SongsReady__BEGINNING__(){
-        getSongReady { result in
-            switch result{
-            case .success(let song):
-                self.queue.append(song)
-                print("\(song.name) - \(song.artists)")
-                self.fillSeeds {
-                    self.getSongReady { result in
-                        switch result{
-                        case .success(let song):
-                            self.queue.append(song)
-                            print("\(song.name) - \(song.artists)")
-                        case .failure(let err):
-                            DispatchQueue.main.async {
-                                self.presentErrorToUser(localizedError: err)
-                            }
+            guard let title = self.containerTitle else { return}
+            SongsController.shared.getQueuePosition(containerTitle: title, userID: currentUser.user.id) { pos in
+                SongsController.shared.setQueuePosition(containerTitle: title, userID: currentUser.user.id, position: pos)
+                SongsController.shared.getSongFromQueue(position: pos, userId: currentUser.user.id, containerTitle: title) { result in
+                    switch result{
+                    case .success(let song):
+                        self.setDisplay(song)
+                        SongsController.shared.setQueuePosition(containerTitle: title, userID: currentUser.user.id, position: pos+1)
+                        self.addOneToQueue(){}
+                    case .failure(let err):
+                        self.addOneToQueue(){
+                            self.addOneToQueue(){SongsController.shared.getSongFromQueue(position: pos, userId: currentUser.user.id, containerTitle: title) { result in
+                                switch result{
+                                case .success(let song):
+                                    self.setDisplay(song)
+                                    SongsController.shared.setQueuePosition(containerTitle: title, userID: currentUser.user.id, position: pos + 1)
+                                    self.addOneToQueue(){}
+                                case .failure(let err):
+                                    self.presentErrorToUser(localizedError: err)
+                                }
+                            }}
                         }
                     }
                 }
-            case .failure(let err):
-                DispatchQueue.main.async {
+            }
+        }
+    }
+    func loadNextSong(completion: @escaping(SpotifySong)->Void){
+        guard let title = containerTitle,
+              let user = UserController.shared.currentUser else { return}
+        SongsController.shared.getQueuePosition(containerTitle: title, userID: user.user.id) { pos in
+            SongsController.shared.getSongFromQueue(position: pos, userId: user.user.id, containerTitle: title) { result in
+                switch result{
+                case .success(let song):
+                    completion(song)
+                case .failure(let err):
                     self.presentErrorToUser(localizedError: err)
                 }
             }
@@ -135,12 +150,16 @@ class TinderViewController: UIViewController{
         }.resume()
     }
     func downloadFileFromURL(url:URL){
-
         var downloadTask:URLSessionDownloadTask
         downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { [weak self](URL, response, error) -> Void in
+            
+            if let error = error{
+                self?.showToast(message: "No preview available for this song")
+                return
+            }
             self?.play(url: URL!)
         })
-            
+        
         downloadTask.resume()
         
     }
@@ -182,13 +201,14 @@ class TinderViewController: UIViewController{
     func setDisplay(_ song: SpotifySong){
         //all the data is there except album art
         //so we bring that boi in
-        let url = song.album.images[0].url
-        URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
+        let urll = song.album.images[0].url
+        URLSession.shared.dataTask(with: URLRequest(url: urll)) { data, response, error in
             if let error = error{
                 print(error)
                 return
             }
-            guard let data = data else { return}
+            guard let data = data else {
+                return}
             let albumImage = UIImage(data: data) ?? UIImage(named: "music placeholder")
             DispatchQueue.main.async {
                 self.pictureView.image = albumImage
@@ -196,12 +216,33 @@ class TinderViewController: UIViewController{
                 self.artistLabel.text = song.artists[0].name
                 self.currentlyDisplayedSong = song
             }
+            self.currentlyDisplayedSong = song
         }.resume()
     }
     //MARK: actions
     @IBAction func backButtonPressed(_ sender: Any) {
         //back button was pressed
         dismiss(animated: true, completion: nil)
+    }
+    @IBAction func openButtonPressed(_ sender: Any) {
+        guard let containerTitle = containerTitle else { return}
+        SongsController.shared.userNum(containerTitle: containerTitle) { num in
+            if num==1{
+                SongsController.shared.getMatchPlaylist(containerTitle: containerTitle) { id in
+                    DispatchQueue.main.async{
+                        UIApplication.shared.open(URL(string: "https:open.spotify.com/playlist/\(id)")!)
+                    }
+                }
+            }else if num==2{
+                let elements = containerTitle.replacingOccurrences(of: " && ", with: "`").split(separator: "`")
+                let reversedString: String = elements[1]+" && "+elements[0]
+                SongsController.shared.getMatchPlaylist(containerTitle: reversedString) { id in
+                    DispatchQueue.main.async{
+                        UIApplication.shared.open(URL(string: "https:open.spotify.com/playlist/\(id)")!)
+                    }
+                }
+            }
+        }
     }
     @IBAction func heartButtonPressed(_ sender: Any) {
         likeCurrentSong()
@@ -214,17 +255,52 @@ class TinderViewController: UIViewController{
         playSongDemo()
     }
     @objc func dislikeCurrentSong(){
-        DispatchQueue.main.async {
-            self.showToast(message: "disliked")
+        guard let title = containerTitle,
+              let song = currentlyDisplayedSong,
+              let currentUser = UserController.shared.currentUser else {
+            return}
+        SongsController.shared.dislikeSong(containerTitle: title, song: song) { result in
+            switch result{
+            case .success(_):
+                print("yee")
+            case .failure(let err):
+                DispatchQueue.main.async {
+                    self.presentErrorToUser(localizedError: err)
+                }
+            }
         }
-        loadMoreSong()
+        addOneToQueue(){}
+        SongsController.shared.getQueuePosition(containerTitle: title, userID: currentUser.user.id) { pos in
+            SongsController.shared.setQueuePosition(containerTitle: title, userID: currentUser.user.id, position: pos+1)
+            self.loadNextSong{
+                song in
+                self.setDisplay(song)
+            }
+        }
         playerFinished()
     }
     @objc func likeCurrentSong(){
-        DispatchQueue.main.async {
-            self.showToast(message: "liked")
+        guard let title = containerTitle,
+              let song = currentlyDisplayedSong,
+              let currentUser = UserController.shared.currentUser else { return}
+        SongsController.shared.likeSong(containerTitle: title, song: song) { result in
+            switch result{
+            case .success(_):
+                print("yee")
+            case .failure(let err):
+                DispatchQueue.main.async {
+                    self.presentErrorToUser(localizedError: err)
+                }
+            }
         }
-        loadMoreSong()
+        addOneToQueue(){}
+        SongsController.shared.getQueuePosition(containerTitle: title, userID: currentUser.user.id) { pos in
+            SongsController.shared.setQueuePosition(containerTitle: title, userID: currentUser.user.id, position: pos+1)
+            self.loadNextSong{
+                song in
+                self.setDisplay(song)
+            }
+        }
         playerFinished()
     }
     @objc func playerFinished(){
@@ -236,7 +312,11 @@ class TinderViewController: UIViewController{
         }
     }
     @objc func playSongDemo(){
-        guard let url = currentlyDisplayedSong?.preview_url else { return}
+        guard let url = currentlyDisplayedSong?.preview_url else {
+            DispatchQueue.main.async {
+                self.showToast(message: "No available preview for this song")
+            }
+            return}
         if let player = player{
             if player.isPlaying{
                 player.stop()
@@ -252,34 +332,17 @@ class TinderViewController: UIViewController{
             downloadFileFromURL(url: url)
         }
     }
-    func loadMoreSong(){
-        if queue.count > 1{
-            getNewSeeds()
-            queue.remove(at: 0)
-            setDisplay(queue[0])
-            getSongReady { result in
-                switch result{
-                case .failure(let err):
-                    DispatchQueue.main.async{
-                        self.presentErrorToUser(localizedError: err)
-                    }
-                case .success(let song):
-                    self.queue.append(song)
-                
-                }
-            }
-        }else{
-            getNewSeeds()
-            getSongReady { result in
-                switch result{
-                case .failure(let err):
-                    DispatchQueue.main.async{
-                        self.presentErrorToUser(localizedError: err)
-                    }
-                case .success(let song):
-                    self.queue.append(song)
-                
-                }
+    func addOneToQueue(completion: @escaping()->Void){
+        getNewSeeds()
+        self.url = constructURL()
+        guard let title = containerTitle else { return}
+        getSongReady { result in
+            switch result{
+            case .success(let song):
+                SongsController.shared.addSongToQueue(song: song.id, title)
+                completion()
+            case .failure(let err):
+                self.presentErrorToUser(localizedError: err)
             }
         }
     }

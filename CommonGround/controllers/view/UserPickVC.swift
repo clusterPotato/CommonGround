@@ -22,8 +22,8 @@ class UserPickVC: UIViewController{
     
     //MARK: junk
     var width: CGFloat = 0.0
+    var observer: NSObjectProtocol?
     var numberOfGenresToDisplay = 3
-    private var observer: NSObjectProtocol?
     var selectedCellUserdata: UserData?
     var previouslySelectedCell: UserCell?
     let iphone11Height: CGFloat = 1792
@@ -32,6 +32,10 @@ class UserPickVC: UIViewController{
     
     //MARK: vdl
     override func viewDidLoad() {
+        observer = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [unowned self] notification in
+            print("fg")
+            self.recentUsersCollectionView.reloadData()
+        }
         numberOfGenresToDisplay -= 1
         UserController.shared.delegate = self
         super.viewDidLoad()
@@ -57,11 +61,17 @@ class UserPickVC: UIViewController{
     @objc func removeAddAlert(){
         addAlert.removeFromSuperview()
     }
+    @objc func helpPressed(){
+        let alertVC = UIAlertController(title: "Hep", message: "To partner with somebody, you must have their Spotify ID and they must have yours. You can share it via the share button in the top right", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alertVC, animated: true, completion: nil)
+    }
     func constrainAddView(){
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(removeAddAlert))
         swipeDown.direction = .down
         self.view.addGestureRecognizer(swipeDown)
-        addAlert.anchor(top: nil, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeading: 0, paddingtrailing: 0, width: nil, height: 256)
+        add_helpButton.addTarget(self, action: #selector(helpPressed), for: .touchUpInside)
+        addAlert.anchor(top: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeading: 0, paddingtrailing: 0, width: nil, height: 256)
         usernameField.delegate = self
         plusButton.addTarget(self, action: #selector(addUser), for: .touchUpInside)
         addUserLabel.anchor(top: addAlert.topAnchor, bottom: nil, leading: addAlert.leadingAnchor, trailing: addAlert.trailingAnchor, paddingTop: 8, paddingBottom: 0, paddingLeading: 8, paddingtrailing: 8, width: nil, height: nil)
@@ -96,6 +106,12 @@ class UserPickVC: UIViewController{
             //do not proceed until user selects a valid user
         }
     }
+    @IBAction func copyButtonPressed(_ sender: Any) {
+        guard let currentUser = UserController.shared.currentUser else { return}
+        let shareText = "Add me on CommonGround using my Spotify ID: \(currentUser.user.id)"
+        let activitiesVC = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
+        present(activitiesVC, animated: true, completion: nil)
+    }
     @objc func addUser(){
         guard let id = usernameField.text, !id.isEmpty else { return}
         UserController.shared.addUser(id) { result in
@@ -116,6 +132,10 @@ class UserPickVC: UIViewController{
     }
 }
 extension UserPickVC: UICollectionViewDelegate, UICollectionViewDataSource, UserCellDelegate, AddManCellDelegate, UICollectionViewDelegateFlowLayout{
+    func deleted() {
+        self.recentUsersCollectionView.reloadData()
+    }
+    
     func addButtonPressed() {
         presentAddUserVC()
     }
@@ -156,6 +176,7 @@ extension UserPickVC: UICollectionViewDelegate, UICollectionViewDataSource, User
         if indexPath.section==0{
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "manCell", for: indexPath) as? UserCell{
                 cell.delegate = self
+                cell.button.addTarget(cell.self, action: #selector(cell.setInDeleteMode), for: .touchDownRepeat)
                 cell.layer.cornerRadius = 20
                 cell.layer.borderColor = UIColor(named: "TextColor")?.cgColor
                 cell.userdata = UserController.shared.savedUsers[indexPath.row]

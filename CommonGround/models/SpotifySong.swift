@@ -44,3 +44,16 @@ struct TrackObject: Codable{
 struct TrackData: Codable{
     let tracks: [SpotifySong]
 }
+struct SpotifyPlaylistListItem: Codable{
+    let name: String
+    let id: String
+}
+struct SpotifyPlaylistList: Codable{
+    let items: [SpotifyPlaylistListItem]
+}
+struct SpotifyPlaylistTrackList: Codable{
+    let items: [SpotifyPlaylistTrackListItem]
+}
+struct SpotifyPlaylistTrackListItem: Codable{
+    let track: SpotifySong
+}

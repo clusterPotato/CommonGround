@@ -77,6 +77,7 @@ class UserController{
             }
             else if(snapshot.exists()){
                 guard let value = snapshot.value as? [String: Any] else { return}
+                self.savedUsers = []
                 for element in value{
                     guard let userFakeData = element.value as? [String: Any] else { return}
                     let user = User(userFakeData)

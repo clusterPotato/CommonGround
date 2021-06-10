@@ -14,7 +14,7 @@ struct Strings{
     static let encryptionSalt = "QwabGYrkJWkvt389xqDKkQIPIcKUg8Ns"
     static let spotifyApiBase = "https://spotty-common-ground.herokuapp.com/api/token"
     static let spotifyRedirectURI = "commonGround://open"
-    static let spotifyApiAuthURL = "https://accounts.spotify.com/authorize?client_id=\(client_id)&response_type=code&redirect_uri=\(spotifyRedirectURI)&scope=playlist-modify-public%20user-top-read"
+    static let spotifyApiAuthURL = "https://accounts.spotify.com/authorize?client_id=\(client_id)&response_type=code&redirect_uri=\(spotifyRedirectURI)&scope=playlist-modify-public%20user-top-read%20playlist-modify-private"
     static let spotifyApiOauthURL = "https://accounts.spotify.com/api/token"
     static var openURLString: String?
     static var oauthCode: String?
@@ -23,4 +23,10 @@ struct Strings{
     static let topArtistSeedsURL = "https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term"
     static let recommendationsURL = "https://api.spotify.com/v1/recommendations"
     static let topSongSeedsURL = "https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term"
+    static let apiPlaylistGetPostURL = "https://api.spotify.com/v1/me/playlists"
+    //static let playlistCoverUploadPUTURL = "https://api.spotify.com/v1/playlists/{playlist_id}/images"
+    ///replace USER1 and USER2 with the respective user display names
+    static let playlist_name_schema = "CommonGround Playlist - USER1 and USER2"
+    ///replace{playlist_id}with...you guessed it
+    static let playlistTrackGetPostURL = "https://api.spotify.com/v1/playlists/{playlist_id}/tracks"
 }
