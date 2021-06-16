@@ -313,6 +313,11 @@ class TinderViewController: UIViewController, MatchDisplayDelegate{
             self.playerFinished()
         }
     }
+    @IBAction func halpPressed(_ sender: Any) {
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(identifier: "halp")
+        present(vc, animated: true, completion: nil)
+    }
     @objc func likeCurrentSong(){
         guard let title = containerTitle,
               let song = currentlyDisplayedSong,
