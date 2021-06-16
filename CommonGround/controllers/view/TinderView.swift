@@ -72,7 +72,7 @@ class TinderViewController: UIViewController, MatchDisplayDelegate{
                         self.setDisplay(song)
                         SongsController.shared.setQueuePosition(containerTitle: title, userID: currentUser.user.id, position: pos+1)
                         self.addOneToQueue(){}
-                    case .failure(let err):
+                    case .failure(_):
                         self.addOneToQueue(){
                             self.addOneToQueue(){SongsController.shared.getSongFromQueue(position: pos, userId: currentUser.user.id, containerTitle: title) { result in
                                 switch result{
@@ -156,7 +156,7 @@ class TinderViewController: UIViewController, MatchDisplayDelegate{
         var req = URLRequest(url: url)
         req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: req) { data, resp, err in
-            if let err = err{
+            if let _ = err{
                 return completion(.failure(.notReadyToGoToWeb))
             }
             guard let data = data else {
@@ -173,7 +173,7 @@ class TinderViewController: UIViewController, MatchDisplayDelegate{
         var downloadTask:URLSessionDownloadTask
         downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { [weak self](URL, response, error) -> Void in
             
-            if let error = error{
+            if let _ = error{
                 self?.showToast(message: "No preview available for this song")
                 return
             }
@@ -212,8 +212,15 @@ class TinderViewController: UIViewController, MatchDisplayDelegate{
         gestureLeft.direction = .left
         let gestureRight = UISwipeGestureRecognizer(target: self, action: #selector(likeCurrentSong))
         gestureRight.direction = .right
+        let gestureUp = UISwipeGestureRecognizer(target: self, action: #selector(swipedImageUp))
+        gestureUp.direction = .up
         container.addGestureRecognizer(gestureLeft)
+        container.addGestureRecognizer(gestureUp)
         container.addGestureRecognizer(gestureRight)
+        let artistHit = UITapGestureRecognizer(target: self, action: #selector(tappedArtist))
+        artistLabel.addGestureRecognizer(artistHit)
+        let songHit = UITapGestureRecognizer(target: self, action: #selector(swipedImageUp))
+        titleLabel.addGestureRecognizer(songHit)
     }
     func setDisplay(_ song: SpotifySong){
         //all the data is there except album art
@@ -237,8 +244,13 @@ class TinderViewController: UIViewController, MatchDisplayDelegate{
         }.resume()
     }
     //MARK: actions
-    @objc func pressedImage(){
-        
+    @objc func swipedImageUp(){
+        guard let currentSong = currentlyDisplayedSong else { return}
+        UIApplication.shared.open(URL(string: "https://open.spotify.com/track/\(currentSong.id)")!)
+    }
+    @objc func tappedArtist(){
+        guard let currentSong = currentlyDisplayedSong else { return}
+        UIApplication.shared.open(URL(string: "https://open.spotify.com/artist/\(currentSong.artists[0].id)")!)
     }
     @IBAction func backButtonPressed(_ sender: Any) {
         //back button was pressed

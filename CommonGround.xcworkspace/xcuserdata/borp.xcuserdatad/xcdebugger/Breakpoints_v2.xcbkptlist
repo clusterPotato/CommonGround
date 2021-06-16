@@ -19,16 +19,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EE389CC9-00A9-449B-8593-745579F7CD37"
+            uuid = "A397AEFB-BADC-41EC-85C5-1F5368602E21"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CommonGround/controllers/model/SpotifySongsController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "42EBEAF5-793B-4257-ABE5-1DD0DDB04EAB"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CommonGround/controllers/view/TinderView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "338"
-            endingLineNumber = "338"
-            landmarkName = "makeLikesHitstring(completion:)"
+            startingLineNumber = "252"
+            endingLineNumber = "252"
+            landmarkName = "tappedArtist()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

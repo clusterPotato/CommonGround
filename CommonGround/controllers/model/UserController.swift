@@ -98,7 +98,7 @@ class UserController{
         }
     }
     func getArtistsFromDB(id: String, completion: @escaping([SpotifyArtist])->Void){
-        guard let currentUser = currentUser else { return}
+        guard let _ = currentUser else { return}
         let db = database.reference().child(id).child("topArtists")
         db.getData { err, snapshot in
             if snapshot.exists(){
@@ -113,7 +113,7 @@ class UserController{
         }
     }
     func getSongsFromDB(id: String, completion: @escaping([SpotifySong])->Void){
-        guard let currentUser = currentUser else { return}
+        guard let _ = currentUser else { return}
         let db = database.reference().child(id).child("topSongs")
         db.getData { err, snapshot in
             if snapshot.exists(){
@@ -165,7 +165,7 @@ class UserController{
         request.setValue("Bearer "+token, forHTTPHeaderField: "Authorization")
         ////print(request.allHTTPHeaderFields)
         URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error{
+            if let _ = error{
                 return completion(.failure(.cannotCompute))
             }
             if let data = data{
@@ -207,7 +207,6 @@ class UserController{
                 print(respomse.statusCode)
             }
             if let data = data{
-                print(String(data: data, encoding: .utf8))
                 do{
                     self.currentBlankUser = try JSONDecoder().decode(User.self, from: data)
                     return completion()
@@ -223,8 +222,7 @@ class UserController{
         let dict = currentUser.user.display_name
         db.setValue(dict){
             error, _ in
-            if let error = error {
-                //print(error)
+            if let _ = error {
             }else{
                 
             }
@@ -284,7 +282,7 @@ class UserController{
         request.setValue("Bearer "+token, forHTTPHeaderField: "Authorization")
         request.httpMethod = "GET"
         URLSession.shared.dataTask(with: request) { data, res, err in
-            if let err = err{
+            if let _ = err{
                 return completion(.failure(.invalidInput))
             }
             guard let data = data else { return completion(.failure(.cannotDecode))}

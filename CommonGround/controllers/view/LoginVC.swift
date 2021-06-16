@@ -15,9 +15,8 @@ class LoginVC: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         observer = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [unowned self] notification in
-            print("launched with \(Strings.openURLString)")
             EndUserController.shared.testForCodeExist()
-            if let code = Strings.openURLString{
+            if let _ = Strings.openURLString{
                 let sb = UIStoryboard(name: "Main", bundle: nil)
                 let vc = sb.instantiateViewController(identifier: "loading") as! LoadingViewController
                 vc.modalPresentationStyle = .fullScreen
@@ -32,7 +31,7 @@ class LoginVC: UIViewController{
                     loading?.dismiss(animated: true, completion: nil)
                     showToast(message: "Welcome \(user.user.display_name)!")
                     UIView.animate(withDuration: 1) {
-                        loginButton.setImage(UIImage(named: "spotify_gray"), for: .normal)
+                        loginButton.isEnabled = false
                         loginButton.isUserInteractionEnabled = false
                         nextButton.backgroundColor = UIColor(named: "ButtonColor")
                     }
@@ -49,7 +48,7 @@ class LoginVC: UIViewController{
     }
     //MARK: actions
     @IBAction func loginButtopnPressed(_ sender: Any) {
-        if let url = Strings.openURLString{}else{getCodeForRedirect()}
+        if let _ = Strings.openURLString{}else{getCodeForRedirect()}
     }
     @IBAction func nextButtonPressed(_ sender: Any) {
         let sb = UIStoryboard(name: "Main", bundle: nil)

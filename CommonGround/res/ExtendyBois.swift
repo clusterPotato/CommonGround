@@ -126,8 +126,8 @@ extension GenrelessSpotifyArtist{
 extension SpotifySong{
     static func fromDBListEntry(_ t: Any)->SpotifySong{
         let t = t as! [String: Any]
-        let artists = GenrelessSpotifyArtist.arrayFromDBListEntry(t["artists"])
-        let album = SpotifyAlbum.fromDBListEntry(t["album"])
+        let artists = GenrelessSpotifyArtist.arrayFromDBListEntry(t["artists"] as Any)
+        let album = SpotifyAlbum.fromDBListEntry(t["album"]as Any)
         let id = t["id"] as? String ?? ""
         let url: URL? = t["preview_url"] as? URL ?? nil
         let name = t["name"] as? String ?? ""
@@ -139,8 +139,8 @@ extension SpotifyAlbum{
     static func fromDBListEntry(_ t: Any)->SpotifyAlbum{
         //print(t)
         let t = t as! [String: Any]
-        let artists = GenrelessSpotifyArtist.arrayFromDBListEntry(t["artists"])
-        let images = SpotifyAlbumArt.arrayFromDBListEntry(t["images"])
+        let artists = GenrelessSpotifyArtist.arrayFromDBListEntry(t["artists"]!)
+        let images = SpotifyAlbumArt.arrayFromDBListEntry(t["images"] as Any)
         let name = t["name"] as? String ?? ""
         let uri = t["uri"] as? String ?? ""
         let release_date = t["release_date"] as? String ?? ""
@@ -158,7 +158,7 @@ extension SpotifyAlbumArt{
         let t = t as! [Any]
         for s in t{
             guard let s = s as? [String: String] else { break}
-            let url = s["url"] as? String ?? ""
+            let url = s["url"] ?? ""
             let x = SpotifyAlbumArt(url: URL(string: url)!)
             retvar.append(x)
         }

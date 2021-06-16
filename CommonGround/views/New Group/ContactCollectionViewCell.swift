@@ -64,7 +64,7 @@ class UserCell: UICollectionViewCell{
         guard user.user.images.count > 0 else { return}
         guard let imageURL = URL(string: user.user.images[0].url) else { return}
         URLSession.shared.dataTask(with: URLRequest(url:imageURL)) { data, resp, err in
-            if let err = err{
+            if let _ = err{
                 //print(err)
             }else{
                 guard let data = data else { return}
@@ -79,8 +79,8 @@ class UserCell: UICollectionViewCell{
     }
     
     @IBAction func buttonPress(_ sender: Any) {
-        guard let indexpath = indexPath else { return}
-        guard let image = pictureView.image else {return}
+        guard let _ = indexPath else { return}
+        guard let _ = pictureView.image else {return}
         delegate?.cellButtonPressed(sender: self)
     }
 }

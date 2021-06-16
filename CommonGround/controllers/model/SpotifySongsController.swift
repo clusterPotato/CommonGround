@@ -170,7 +170,7 @@ class SongsController{
         var request = URLRequest(url: songURL)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error{
+            if let _ = error{
                 return completion(.failure(.cannotCompute))
             }
             guard let data = data else { return}
@@ -196,7 +196,7 @@ class SongsController{
     }
     func saveRelevantSongs(_ container: DatabaseReference, saveData: [String: String], completion: @escaping()->Void){
         container.setValue(saveData) { err, ref in
-            if let err = err{
+            if let _ = err{
                 return
             }
             else {return completion()}
@@ -208,7 +208,7 @@ class SongsController{
             switch user{
             case 0:
                 let dbRef = UserController.shared.database.reference().child(containerTitle).child("liked")
-                var data: [String: String] = [song.id : current.user.id]
+                let data: [String: String] = [song.id : current.user.id]
                 self.saveRelevantSongs(dbRef, saveData: data) {
                     return completion(.success(song))
                 }
@@ -249,6 +249,7 @@ class SongsController{
                                 self.updateMatched(id: song.id, containerTitle: containerTitle)
                             }
                         }else{
+                            self.matchDelegate?.likedButDidNotMatch()
                             saveData[song.id] = current.user.id
                         }
                         self.saveRelevantSongs(ref, saveData: saveData) {
@@ -554,7 +555,7 @@ class SongsController{
             switch user{
             case 0:
                 let dbRef = UserController.shared.database.reference().child(containerTitle).child("disliked")
-                var data: [String: String] = [song.id : current.user.id]
+                let data: [String: String] = [song.id : current.user.id]
                 self.saveRelevantSongs(dbRef, saveData: data) {
                     return completion(.success(song))
                 }

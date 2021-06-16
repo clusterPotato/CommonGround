@@ -88,7 +88,7 @@ class UserPickVC: UIViewController{
         usernameField.layer.borderColor = UIColor(named: "TextColor")!.cgColor
         usernameField.layer.borderWidth = 2
         usernameField.layer.cornerRadius = 2
-        usernameField.attributedPlaceholder = NSAttributedString(string: "Enter Username Here", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "TextColor")])
+        usernameField.attributedPlaceholder = NSAttributedString(string: "Enter Username Here", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "TextColor")!])
         plusButton.addTarget(self, action: #selector(addUser), for: .touchUpInside)
         addUserLabel.anchor(top: addAlert.topAnchor, bottom: nil, leading: addAlert.leadingAnchor, trailing: addAlert.trailingAnchor, paddingTop: 8, paddingBottom: 0, paddingLeading: 8, paddingtrailing: 8, width: nil, height: nil)
         add_helpButton.anchor(top: addUserLabel.bottomAnchor, bottom: nil, leading: nil, trailing: addAlert.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeading: 0, paddingtrailing: 16, width: 48, height: 48)
