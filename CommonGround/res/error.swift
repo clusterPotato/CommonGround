@@ -29,13 +29,13 @@ extension UIViewController: ErrorDelegate {
         present(alertController, animated: true)
     }
     func showToast(message : String) {
-        let darkMode = (traitCollection.userInterfaceStyle == .dark)
-        //print(darkMode)
+        //let darkMode = (traitCollection.userInterfaceStyle == .dark)
         let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/4 - 75, y: self.view.frame.size.height-100, width: self.view.frame.width*0.9, height: 35))
-        toastLabel.backgroundColor = darkMode ? UIColor.white.withAlphaComponent(0.6) : UIColor.black.withAlphaComponent(0.6)
+        toastLabel.backgroundColor = UIColor(named: "grayedOut")
         toastLabel.textColor = .white
         toastLabel.textAlignment = .center;
         toastLabel.text = message
+        toastLabel.textColor = UIColor(named: "TextColor")
         toastLabel.alpha = 1.0
         toastLabel.numberOfLines = 0
         toastLabel.layer.cornerRadius = 10;
@@ -51,11 +51,14 @@ extension UIViewController: ErrorDelegate {
 }
 enum SongError: LocalizedError{
     case cannotCompute
+    case genericErr(Error)
     case invalidInput
     case noOAuthCode
     case noToken
     case noSuchUser
+    case notReadyToGoToWeb
     case noImageData
+    case noDB
     case cannotDecode
     var errorDescription: String?{
         switch self{
@@ -73,6 +76,12 @@ enum SongError: LocalizedError{
             return "cannot decode"
         case .noImageData:
             return "no image data"
+        case .notReadyToGoToWeb:
+            return "Url is not formatted yet"
+        case .genericErr (let err):
+            return err.localizedDescription
+        case .noDB:
+            return "no database"
         }
     }
 }

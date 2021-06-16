@@ -19,13 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         if let url = launchOptions?[UIApplication.LaunchOptionsKey.url] as? URL {
             Strings.openURLString = url.absoluteString
-            print("launched with url \(url)")
+            //print("launched with url \(url)")
         }
         return true
     }
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         Strings.openURLString = url.absoluteString
-        //print("pp")
+        ////print("pp")
         return true
     }
     func getCodeForRedirect(){

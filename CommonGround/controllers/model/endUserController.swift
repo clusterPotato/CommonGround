@@ -22,7 +22,7 @@ class EndUserController{
         request.setValue("Basic \(Strings.base64Secret)", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { data, response, err in
             if let _ = err{
-                //print(err)
+                ////print(err)
                 return completion(.failure(.cannotCompute))
             }
             if let data = data{

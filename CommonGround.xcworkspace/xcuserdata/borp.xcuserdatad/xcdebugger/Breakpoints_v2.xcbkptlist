@@ -19,64 +19,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "3FA918A9-3F56-4EF7-8412-9E415BFD2508"
+            uuid = "A397AEFB-BADC-41EC-85C5-1F5368602E21"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CommonGround/controllers/model/endUserController.swift"
+            filePath = "CommonGround/controllers/model/SpotifySongsController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "getTokenFromCode(completion:)"
-            landmarkType = "7">
+            startingLineNumber = "220"
+            endingLineNumber = "220"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "09AA2D8C-5E46-427F-AB1F-266D85A21135"
+            uuid = "42EBEAF5-793B-4257-ABE5-1DD0DDB04EAB"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CommonGround/controllers/model/endUserController.swift"
+            filePath = "CommonGround/controllers/view/TinderView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
-            landmarkName = "getTokenFromCode(completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F7296C2D-58EB-4B59-B110-9DE75014AEFE"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CommonGround/controllers/model/UserController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
-            landmarkName = "finishGrabbing(completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1FEA0687-09F8-4BF6-890F-3D1EC7453EEA"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CommonGround/controllers/model/UserController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "finishGrabbing(completion:)"
+            startingLineNumber = "252"
+            endingLineNumber = "252"
+            landmarkName = "tappedArtist()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

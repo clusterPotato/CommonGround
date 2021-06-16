@@ -21,3 +21,5 @@ class UserData: Equatable{
 struct ModelData: Codable{
     let genres: [String]
 }
+
+

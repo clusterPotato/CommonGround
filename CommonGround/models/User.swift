@@ -15,13 +15,12 @@ struct User: Codable, Equatable{
     init(_ t: [String: Any]){
         self.id = t["id"] as? String ?? ""
         self.display_name = t["display_name"] as? String ?? ""
-        let thing = t["images"]
         guard let imagess = t["images"] as? NSArray else {
             self.images = [UserImage(url: "")];return}
         let imagesString = imagess.value(forKey: "url")
         let singleoa = imagesString as! NSArray
         let stringy = singleoa[0] as! NSString
-        self.images = [UserImage(url: stringy as! String)]
+        self.images = [UserImage(url: stringy as String)]
     }
     let images: [UserImage]
 }
