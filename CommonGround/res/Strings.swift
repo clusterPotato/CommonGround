@@ -14,7 +14,7 @@ struct Strings{
     static let encryptionSalt = "QwabGYrkJWkvt389xqDKkQIPIcKUg8Ns"
     static let spotifyApiBase = "https://spotty-common-ground.herokuapp.com/api/token"
     static let spotifyRedirectURI = "commonGround://open"
-    static let spotifyApiAuthURL = "https://accounts.spotify.com/authorize?client_id=\(client_id)&response_type=code&redirect_uri=\(spotifyRedirectURI)&scope=playlist-modify-public%20user-top-read%20playlist-modify-private"
+    static let spotifyApiAuthURL = "https://accounts.spotify.com/authorize?client_id=\(client_id)&response_type=code&redirect_uri=\(spotifyRedirectURI)&scope=playlist-modify-public%20user-top-read"
     static let spotifyApiOauthURL = "https://accounts.spotify.com/api/token"
     static var openURLString: String?
     static var oauthCode: String?

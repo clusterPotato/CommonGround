@@ -222,6 +222,7 @@ class SongsController{
                         if data.keys.contains(song.id){
                             if saveData[song.id] != current.user.id{
                                 self.matchSong(song: song, containerTitle: containerTitle)
+                                self.updateMatched(id: song.id, containerTitle: containerTitle)
                             }
                         }else{
                             self.matchDelegate?.likedButDidNotMatch()
@@ -246,6 +247,7 @@ class SongsController{
                         var saveData = data
                         if data.keys.contains(song.id){
                             if saveData[song.id] != current.user.id{
+                                self.matchSong(song: song, containerTitle: containerTitle)
                                 self.updateMatched(id: song.id, containerTitle: containerTitle)
                             }
                         }else{
@@ -503,7 +505,7 @@ class SongsController{
                         var request = URLRequest(url: url)
                         request.setValue("Bearer \(Strings.token!)", forHTTPHeaderField: "Authorization")
                         request.httpMethod = "POST"
-                        request.httpBody =  "{\"name\": \"\(playlistName)\",\"description\": \"Auto Generated via CommonGround\",\"public\": false,\"collaborative\":true}".data(using: .ascii)
+                        request.httpBody =  "{\"name\": \"\(playlistName)\",\"description\": \"Auto Generated via CommonGround\",\"public\": true,\"collaborative\":false}".data(using: .ascii)
                         URLSession.shared.dataTask(with: request) { data, resp, err in
                             if let _ = err{
                                 return
